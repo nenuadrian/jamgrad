@@ -7,7 +7,7 @@
 python -m venv jamenv
 source jamenv/bin/activate
 
-pip install pytest pytest-cov numpy torch
+pip install pytest pytest-cov numpy torch scikit-learn pandas
 ```
 
 ## test

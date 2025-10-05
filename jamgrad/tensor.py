@@ -58,6 +58,18 @@ class Tensor:
 
         return self._binary_op(other, np.add, grad_fn_factory)
 
+    def __sub__(self, other):
+        def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
+            def grad_fn(gradient):
+                if self_tensor.requires_grad:
+                    self_tensor.backward(gradient)
+                if is_tensor_other and other_tensor.requires_grad:
+                    other_tensor.backward(-gradient)
+
+            return grad_fn
+
+        return self._binary_op(other, np.subtract, grad_fn_factory)
+
     def __mul__(self, other):
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
@@ -133,3 +145,30 @@ class Tensor:
     @property
     def ndim(self):
         return self.data.ndim
+
+    def __matmul__(self, other):
+        """Matrix multiplication operation."""
+        if not isinstance(other, Tensor):
+            raise TypeError(
+                "Matrix multiplication requires both operands to be Tensors"
+            )
+
+        result_data = np.matmul(self.data, other.data)
+        requires_grad = self.requires_grad or other.requires_grad
+        result = Tensor(result_data, requires_grad=requires_grad)
+
+        if requires_grad:
+
+            def grad_fn(gradient):
+                if self.requires_grad:
+                    # For A @ B, gradient w.r.t A is gradient @ B.T
+                    self_grad = np.matmul(gradient, other.data.T)
+                    self.backward(self_grad)
+                if other.requires_grad:
+                    # For A @ B, gradient w.r.t B is A.T @ gradient
+                    other_grad = np.matmul(self.data.T, gradient)
+                    other.backward(other_grad)
+
+            result.grad_fn = grad_fn
+
+        return result

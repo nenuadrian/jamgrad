@@ -1,3 +1,4 @@
 from .tensor import Tensor
+from . import nn
 
-__all__ = ['Tensor']
+__all__ = ['Tensor', 'nn']
