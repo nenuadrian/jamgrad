@@ -1,5 +1,6 @@
 # jamgrad
 
+![logo](./assets/jamgrad.png)
 
 ## setup
 ```bash
