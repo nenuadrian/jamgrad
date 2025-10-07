@@ -25,3 +25,30 @@ With coverage:
 ```bash
 pytest tests --cov=jamgrad
 ```
+
+## documentation
+
+Generate documentation using Sphinx:
+
+```bash
+pip install sphinx sphinx-rtd-theme
+
+make html
+```
+
+## quick start
+
+```python
+from jamgrad import Tensor
+
+# Basic operations
+x = Tensor([2.0], requires_grad=True)
+y = x ** 2
+y.backward()
+print(x.grad)  # [4.0]
+
+# Neural networks
+from jamgrad.nn import Linear
+layer = Linear(2, 1)
+output = layer(Tensor([[1.0, 2.0]]))
+```

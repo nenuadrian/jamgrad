@@ -1,29 +1,88 @@
+"""
+Neural network modules and functions for JamGrad.
+
+This module provides building blocks for creating neural networks,
+including layers, activation functions, and utilities.
+"""
+
 from .tensor import Tensor
 import numpy as np
 
 
 class Linear:
+    """
+    Linear (fully connected) layer.
+
+    Applies a linear transformation: y = xW + b
+
+    Args:
+        in_features (int): Size of input features
+        out_features (int): Size of output features
+
+    Attributes:
+        weight (Tensor): Weight matrix of shape (in_features, out_features)
+        bias (Tensor): Bias vector of shape (out_features,)
+
+    Examples:
+        >>> layer = Linear(784, 128)
+        >>> x = Tensor(np.random.randn(32, 784))
+        >>> output = layer(x)  # Shape: (32, 128)
+    """
+
     def __init__(self, in_features, out_features):
+        # Xavier/Glorot initialization
+        std = np.sqrt(2.0 / in_features)
         self.weight = Tensor(
-            np.random.randn(in_features, out_features) * np.sqrt(2.0 / in_features),
+            np.random.randn(in_features, out_features) * std,
             requires_grad=True,
         )
         self.bias = Tensor(np.zeros(out_features), requires_grad=True)
 
     def __call__(self, x):
+        """
+        Forward pass through the linear layer.
+
+        Args:
+            x (Tensor): Input tensor of shape (..., in_features)
+
+        Returns:
+            Tensor: Output tensor of shape (..., out_features)
+        """
         return x @ self.weight + self.bias
 
     def parameters(self):
+        """
+        Get all trainable parameters.
+
+        Returns:
+            list: List containing weight and bias tensors
+        """
         return [self.weight, self.bias]
 
 
 def relu(x):
+    """
+    Rectified Linear Unit activation function.
+
+    Applies the function element-wise: f(x) = max(0, x)
+
+    Args:
+        x (Tensor): Input tensor
+
+    Returns:
+        Tensor: Output tensor with ReLU applied
+
+    Examples:
+        >>> x = Tensor([-1, 0, 1, 2])
+        >>> y = relu(x)  # [0, 0, 1, 2]
+    """
     data = np.maximum(0, x.data)
     result = Tensor(data, requires_grad=x.requires_grad)
 
     if x.requires_grad:
 
         def grad_fn(gradient):
+            # Derivative of ReLU: 1 if x > 0, else 0
             relu_grad = (x.data > 0).astype(np.float32)
             x.backward(gradient * relu_grad)
 
