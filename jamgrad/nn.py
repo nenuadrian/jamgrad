@@ -85,40 +85,80 @@ def relu(x):
 
 
 def softmax(x):
-    exp_vals = x.exp()
-    sum_exp = exp_vals.sum(axis=1)
+    """
+    Softmax activation function.
 
-    # Manual broadcasting for division
-    result_data = np.zeros_like(exp_vals.data)
-    for i in range(exp_vals.data.shape[0]):
-        result_data[i] = exp_vals.data[i] / sum_exp.data[i]
+    Applies softmax function along the last dimension:
+    softmax(x_i) = exp(x_i) / sum(exp(x_j)) for all j
 
-    result = Tensor(result_data, requires_grad=x.requires_grad)
+    Args:
+        x (Tensor): Input tensor
 
-    if x.requires_grad:
+    Returns:
+        Tensor: Output tensor with softmax applied
 
-        def grad_fn(gradient):
-            # Simplified softmax gradient
-            s = result.data
-            grad_input = np.zeros_like(s)
-            for i in range(s.shape[0]):
-                jacobian = np.diag(s[i]) - np.outer(s[i], s[i])
-                grad_input[i] = gradient[i] @ jacobian
-            x.backward(grad_input)
+    Examples:
+        >>> x = Tensor([[1, 2, 3]])
+        >>> y = softmax(x)  # Probabilities that sum to 1
+    """
+    # Subtract max for numerical stability
+    x_max = Tensor(np.max(x.data, axis=-1, keepdims=True))
+    x_shifted = x - x_max
 
-        result.grad_fn = grad_fn
+    exp_vals = x_shifted.exp()
+    sum_exp = exp_vals.sum(axis=-1)
 
+    # Create a tensor for broadcasting the denominator
+    # Expand dimensions to match exp_vals for proper broadcasting
+    sum_exp_expanded = Tensor(
+        np.expand_dims(sum_exp.data, axis=-1),
+        requires_grad=sum_exp.requires_grad
+    )
+    
+    # Copy the gradient function from sum_exp to maintain the chain
+    if sum_exp.requires_grad and sum_exp.grad_fn is not None:
+        def sum_exp_expanded_grad_fn(gradient):
+            # Remove the expanded dimension and pass to original sum_exp
+            grad_squeezed = np.sum(gradient, axis=-1)
+            sum_exp.backward(grad_squeezed)
+        sum_exp_expanded.grad_fn = sum_exp_expanded_grad_fn
+
+    # Use tensor operations to maintain gradient chain
+    # This is equivalent to exp_vals / sum_exp_expanded but maintains gradients
+    result = exp_vals * (Tensor([1.0]) / sum_exp_expanded)
+    
     return result
 
 
 def cross_entropy_loss(predictions, targets):
-    log_probs = predictions.log()
-    # One-hot encoding for targets
-    batch_size = targets.data.shape[0]
-    loss_sum = Tensor([0.0], requires_grad=True)
+    """
+    Cross-entropy loss function.
 
-    for i in range(batch_size):
-        target_idx = int(targets.data[i])
-        loss_sum = loss_sum + log_probs.data[i, target_idx] * Tensor([-1.0])
+    Args:
+        predictions (Tensor): Predicted probabilities from softmax
+        targets (Tensor): One-hot encoded target labels
 
-    return loss_sum * (1.0 / batch_size)
+    Returns:
+        Tensor: Cross-entropy loss value
+    """
+    # Clip predictions to avoid log(0)
+    eps = 1e-12
+    pred_clipped = Tensor(
+        np.clip(predictions.data, eps, 1 - eps),
+        requires_grad=predictions.requires_grad,
+    )
+    
+    # Copy gradient function to maintain chain
+    if predictions.requires_grad and predictions.grad_fn is not None:
+        def pred_clipped_grad_fn(gradient):
+            # For clipped values, gradient flows through unchanged for values in (eps, 1-eps)
+            mask = (predictions.data >= eps) & (predictions.data <= 1-eps)
+            grad_filtered = gradient * mask.astype(np.float32)
+            predictions.backward(grad_filtered)
+        pred_clipped.grad_fn = pred_clipped_grad_fn
+
+    # Compute cross entropy: -sum(targets * log(predictions))
+    log_probs = pred_clipped.log()
+    loss = -(targets * log_probs).sum() * (1.0 / targets.data.shape[0])
+
+    return loss

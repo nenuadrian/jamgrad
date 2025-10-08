@@ -66,10 +66,12 @@ def train_step(model, x_batch, y_batch, lr=0.001):
 
     loss.backward()
 
-    # Update parameters
+    # Update parameters with gradient clipping
     for param in model.parameters():
         if param.grad is not None:
-            param.data = param.data - lr * param.grad
+            # Clip gradients to prevent exploding gradients
+            grad_clipped = np.clip(param.grad, -1.0, 1.0)
+            param.data = param.data - lr * grad_clipped
 
     return loss.data, predictions
 
@@ -90,9 +92,9 @@ if __name__ == "__main__":
 
     model = MNISTNet(input_size=X_train.shape[1])
 
-    batch_size = 64
-    epochs = 250
-    lr = 0.001
+    batch_size = 32
+    epochs = 1000
+    lr = 0.01
 
     print(f"Training for {epochs} epochs with batch size {batch_size}...")
 
@@ -112,12 +114,19 @@ if __name__ == "__main__":
             y_batch = Tensor(y_train_shuffled[i:end_idx])
 
             loss, _ = train_step(model, x_batch, y_batch, lr)
-            total_loss += loss
+            
+            # Handle scalar/array loss
+            if hasattr(loss, 'item'):
+                total_loss += loss.item()
+            elif np.isscalar(loss):
+                total_loss += loss
+            else:
+                total_loss += float(loss)
             num_batches += 1
 
         avg_loss = total_loss / num_batches
 
-        if epoch % 5 == 0 or epoch == epochs - 1:
+        if epoch % 10 == 0 or epoch == epochs - 1:
             x_test_tensor = Tensor(X_test)
             y_test_tensor = Tensor(y_test)
             test_pred = model(x_test_tensor)
@@ -126,9 +135,7 @@ if __name__ == "__main__":
             if test_acc > best_acc:
                 best_acc = test_acc
 
-            print(
-                f"Epoch {epoch:2d}, Loss: {avg_loss:.4f}, Test Accuracy: {test_acc:.4f}"
-            )
+            print(f"Epoch {epoch:2d}, Loss: {avg_loss:.4f}, Test Accuracy: {test_acc:.4f}")
 
     print(f"\nBest Test Accuracy: {best_acc:.4f}")
 
@@ -141,6 +148,10 @@ if __name__ == "__main__":
         pred_class = np.argmax(final_pred.data[i])
         true_class = np.argmax(y_test[i])
         confidence = final_pred.data[i, pred_class]
+        status = "✓" if pred_class == true_class else "✗"
+        print(
+            f"{status} Sample {i}: Predicted {pred_class}, True {true_class}, Confidence {confidence:.3f}"
+        )
         status = "✓" if pred_class == true_class else "✗"
         print(
             f"{status} Sample {i}: Predicted {pred_class}, True {true_class}, Confidence {confidence:.3f}"

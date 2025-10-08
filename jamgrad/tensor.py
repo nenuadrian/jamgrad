@@ -118,9 +118,26 @@ class Tensor:
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
-                    self_tensor.backward(gradient)
+                    # Handle broadcasting by summing over broadcasted dimensions
+                    grad_self = gradient
+                    # Sum over dimensions that were broadcasted for self
+                    for i in range(gradient.ndim - self_tensor.data.ndim):
+                        grad_self = np.sum(grad_self, axis=0)
+                    for i, (grad_dim, self_dim) in enumerate(zip(grad_self.shape, self_tensor.data.shape)):
+                        if self_dim == 1 and grad_dim > 1:
+                            grad_self = np.sum(grad_self, axis=i, keepdims=True)
+                    self_tensor.backward(grad_self)
+                    
                 if is_tensor_other and other_tensor.requires_grad:
-                    other_tensor.backward(gradient)
+                    # Handle broadcasting by summing over broadcasted dimensions
+                    grad_other = gradient
+                    # Sum over dimensions that were broadcasted for other
+                    for i in range(gradient.ndim - other_tensor.data.ndim):
+                        grad_other = np.sum(grad_other, axis=0)
+                    for i, (grad_dim, other_dim) in enumerate(zip(grad_other.shape, other_tensor.data.shape)):
+                        if other_dim == 1 and grad_dim > 1:
+                            grad_other = np.sum(grad_other, axis=i, keepdims=True)
+                    other_tensor.backward(grad_other)
 
             return grad_fn
 
@@ -172,6 +189,33 @@ class Tensor:
             return grad_fn
 
         return self._binary_op(other, np.multiply, grad_fn_factory)
+
+    def __truediv__(self, other):
+        """
+        Element-wise division.
+        
+        Args:
+            other: Tensor or scalar to divide by
+            
+        Returns:
+            Tensor: Result of division with gradient support
+            
+        Examples:
+            >>> a = Tensor([4, 6])
+            >>> b = a / 2  # [2, 3]
+        """
+        def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
+            def grad_fn(gradient):
+                if self_tensor.requires_grad:
+                    other_data = other_tensor.data if is_tensor_other else other_tensor
+                    self_tensor.backward(gradient / other_data)
+                if is_tensor_other and other_tensor.requires_grad:
+                    # d/dy (x/y) = -x/y^2
+                    other_tensor.backward(-gradient * self_tensor.data / (other_tensor.data ** 2))
+
+            return grad_fn
+
+        return self._binary_op(other, np.divide, grad_fn_factory)
 
     def __pow__(self, exponent):
         """
@@ -258,13 +302,25 @@ class Tensor:
         result = Tensor(result_data, requires_grad=self.requires_grad)
 
         if self.requires_grad:
-
             def grad_fn(gradient):
                 if axis is None:
-                    grad_expanded = np.full_like(self.data, gradient)
+                    # For sum over all elements, broadcast gradient to original shape
+                    if np.isscalar(gradient):
+                        grad_expanded = np.full_like(self.data, gradient)
+                    else:
+                        grad_expanded = np.full_like(self.data, gradient.item())
                 else:
-                    grad_expanded = np.expand_dims(gradient, axis)
+                    # For sum over specific axis, need to restore the summed dimension
+                    if isinstance(axis, int):
+                        axes = [axis]
+                    else:
+                        axes = list(axis)
+                    
+                    grad_expanded = gradient
+                    for ax in sorted(axes):
+                        grad_expanded = np.expand_dims(grad_expanded, axis=ax)
                     grad_expanded = np.broadcast_to(grad_expanded, self.data.shape)
+                
                 self.backward(grad_expanded)
 
             result.grad_fn = grad_fn
@@ -323,3 +379,21 @@ class Tensor:
             result.grad_fn = grad_fn
 
         return result
+
+    def __neg__(self):
+        """
+        Unary negation.
+        
+        Returns:
+            Tensor: Negated tensor with gradient support
+            
+        Examples:
+            >>> a = Tensor([1, -2])
+            >>> b = -a  # [-1, 2]
+        """
+        def grad_fn_factory(self_tensor, result_data):
+            def grad_fn(gradient):
+                self_tensor.backward(-gradient)
+            return grad_fn
+
+        return self._unary_op(np.negative, grad_fn_factory)
