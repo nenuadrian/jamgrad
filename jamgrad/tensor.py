@@ -5,33 +5,53 @@ from typing import Optional, List, Callable
 class Tensor:
     """
     A tensor class with automatic differentiation capabilities.
-    
+
     This class wraps numpy arrays and provides automatic gradient computation
     for backpropagation in neural networks and optimization algorithms.
-    
+
     Args:
         data: Input data as array-like object
         requires_grad (bool): Whether to compute gradients for this tensor
         grad_fn (callable, optional): Function to compute gradients during backprop
-        
+
     Attributes:
         data (np.ndarray): The underlying numpy array data
         requires_grad (bool): Whether gradients are computed for this tensor
         grad (np.ndarray): Accumulated gradients, None until backward() is called
         grad_fn (callable): Gradient function for backpropagation
-        
+
     Examples:
         >>> x = Tensor([1.0, 2.0], requires_grad=True)
         >>> y = x ** 2
         >>> y.backward(np.ones_like(y.data))
         >>> print(x.grad)  # [2.0, 4.0]
     """
-    
+
     def __init__(self, data, requires_grad=False, grad_fn=None):
         self.data = np.array(data, dtype=np.float32)
         self.requires_grad = requires_grad
         self.grad = None
         self.grad_fn = grad_fn
+        self._op_name = None  # Name of the operation that created this tensor
+        self._children = []   # Child tensors in computation graph
+        self._label = None    # User-defined label for this tensor
+
+    def set_label(self, label):
+        """
+        Set a human-readable label for this tensor.
+        
+        Args:
+            label (str): Label for the tensor (e.g., 'x', 'weight', 'loss')
+            
+        Returns:
+            Tensor: Self for method chaining
+            
+        Examples:
+            >>> x = Tensor([2.0], requires_grad=True).set_label('x')
+            >>> y = (x ** 2).set_label('y')
+        """
+        self._label = label
+        return self
 
     def __repr__(self):
         """String representation of the tensor."""
@@ -40,11 +60,11 @@ class Tensor:
     def backward(self, gradient=None):
         """
         Compute gradients via backpropagation.
-        
+
         Args:
             gradient (np.ndarray, optional): Gradient from upstream computation.
                 If None, assumes gradient of ones (for scalar outputs).
-                
+
         Note:
             This method accumulates gradients in the .grad attribute and
             propagates gradients backward through the computation graph.
@@ -61,12 +81,12 @@ class Tensor:
     def _binary_op(self, other, op_fn, grad_fn_factory):
         """
         Helper method for binary operations.
-        
+
         Args:
             other: Second operand (Tensor or scalar)
             op_fn: Numpy function to apply (e.g., np.add, np.multiply)
             grad_fn_factory: Function that creates the gradient function
-            
+
         Returns:
             Tensor: Result of the binary operation
         """
@@ -76,6 +96,12 @@ class Tensor:
 
         result = Tensor(result_data, requires_grad=requires_grad)
 
+        # Set operation info for graph visualization
+        result._op_name = op_fn.__name__.replace("_", "")
+        result._children = [self]
+        if is_tensor_other:
+            result._children.append(other)
+
         if requires_grad:
             result.grad_fn = grad_fn_factory(self, other, is_tensor_other)
 
@@ -84,16 +110,20 @@ class Tensor:
     def _unary_op(self, op_fn, grad_fn_factory):
         """
         Helper method for unary operations.
-        
+
         Args:
             op_fn: Numpy function to apply (e.g., np.exp, np.log)
             grad_fn_factory: Function that creates the gradient function
-            
+
         Returns:
             Tensor: Result of the unary operation
         """
         result_data = op_fn(self.data)
         result = Tensor(result_data, requires_grad=self.requires_grad)
+
+        # Set operation info for graph visualization
+        result._op_name = op_fn.__name__
+        result._children = [self]
 
         if self.requires_grad:
             result.grad_fn = grad_fn_factory(self, result_data)
@@ -103,18 +133,19 @@ class Tensor:
     def __add__(self, other):
         """
         Element-wise addition.
-        
+
         Args:
             other: Tensor or scalar to add
-            
+
         Returns:
             Tensor: Result of addition with gradient support
-            
+
         Examples:
             >>> a = Tensor([1, 2])
             >>> b = Tensor([3, 4])
             >>> c = a + b  # [4, 6]
         """
+
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
@@ -123,18 +154,22 @@ class Tensor:
                     # Sum over dimensions that were broadcasted for self
                     for i in range(gradient.ndim - self_tensor.data.ndim):
                         grad_self = np.sum(grad_self, axis=0)
-                    for i, (grad_dim, self_dim) in enumerate(zip(grad_self.shape, self_tensor.data.shape)):
+                    for i, (grad_dim, self_dim) in enumerate(
+                        zip(grad_self.shape, self_tensor.data.shape)
+                    ):
                         if self_dim == 1 and grad_dim > 1:
                             grad_self = np.sum(grad_self, axis=i, keepdims=True)
                     self_tensor.backward(grad_self)
-                    
+
                 if is_tensor_other and other_tensor.requires_grad:
                     # Handle broadcasting by summing over broadcasted dimensions
                     grad_other = gradient
                     # Sum over dimensions that were broadcasted for other
                     for i in range(gradient.ndim - other_tensor.data.ndim):
                         grad_other = np.sum(grad_other, axis=0)
-                    for i, (grad_dim, other_dim) in enumerate(zip(grad_other.shape, other_tensor.data.shape)):
+                    for i, (grad_dim, other_dim) in enumerate(
+                        zip(grad_other.shape, other_tensor.data.shape)
+                    ):
                         if other_dim == 1 and grad_dim > 1:
                             grad_other = np.sum(grad_other, axis=i, keepdims=True)
                     other_tensor.backward(grad_other)
@@ -146,13 +181,14 @@ class Tensor:
     def __sub__(self, other):
         """
         Element-wise subtraction.
-        
+
         Args:
             other: Tensor or scalar to subtract
-            
+
         Returns:
             Tensor: Result of subtraction with gradient support
         """
+
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
@@ -167,17 +203,18 @@ class Tensor:
     def __mul__(self, other):
         """
         Element-wise multiplication.
-        
+
         Args:
             other: Tensor or scalar to multiply
-            
+
         Returns:
             Tensor: Result of multiplication with gradient support
-            
+
         Examples:
             >>> a = Tensor([2, 3])
             >>> b = a * 2  # [4, 6]
         """
+
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
@@ -193,17 +230,18 @@ class Tensor:
     def __truediv__(self, other):
         """
         Element-wise division.
-        
+
         Args:
             other: Tensor or scalar to divide by
-            
+
         Returns:
             Tensor: Result of division with gradient support
-            
+
         Examples:
             >>> a = Tensor([4, 6])
             >>> b = a / 2  # [2, 3]
         """
+
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
@@ -211,7 +249,9 @@ class Tensor:
                     self_tensor.backward(gradient / other_data)
                 if is_tensor_other and other_tensor.requires_grad:
                     # d/dy (x/y) = -x/y^2
-                    other_tensor.backward(-gradient * self_tensor.data / (other_tensor.data ** 2))
+                    other_tensor.backward(
+                        -gradient * self_tensor.data / (other_tensor.data**2)
+                    )
 
             return grad_fn
 
@@ -220,17 +260,18 @@ class Tensor:
     def __pow__(self, exponent):
         """
         Element-wise power operation.
-        
+
         Args:
             exponent (float): Power to raise tensor elements to
-            
+
         Returns:
             Tensor: Result of power operation with gradient support
-            
+
         Examples:
             >>> x = Tensor([2, 3])
             >>> y = x ** 2  # [4, 9]
         """
+
         def grad_fn_factory(self_tensor, result_data):
             def grad_fn(gradient):
                 # Handle edge cases for numerical stability
@@ -247,14 +288,15 @@ class Tensor:
     def exp(self):
         """
         Element-wise exponential function.
-        
+
         Returns:
             Tensor: e^x for each element x in the tensor
-            
+
         Examples:
             >>> x = Tensor([0, 1])
             >>> y = x.exp()  # [1.0, 2.718...]
         """
+
         def grad_fn_factory(self_tensor, result_data):
             def grad_fn(gradient):
                 self_tensor.backward(gradient * result_data)
@@ -266,14 +308,15 @@ class Tensor:
     def log(self):
         """
         Element-wise natural logarithm.
-        
+
         Returns:
             Tensor: ln(x) for each element x in the tensor
-            
+
         Examples:
             >>> x = Tensor([1, 2.718])
             >>> y = x.log()  # [0.0, 1.0]
         """
+
         def grad_fn_factory(self_tensor, result_data):
             def grad_fn(gradient):
                 self_tensor.backward(gradient / self_tensor.data)
@@ -285,14 +328,14 @@ class Tensor:
     def sum(self, axis=None):
         """
         Sum reduction along specified axis.
-        
+
         Args:
             axis (int or tuple, optional): Axis or axes along which to sum.
                 If None, sum all elements.
-                
+
         Returns:
             Tensor: Sum of tensor elements with gradient support
-            
+
         Examples:
             >>> x = Tensor([[1, 2], [3, 4]])
             >>> y = x.sum()  # 10
@@ -301,7 +344,12 @@ class Tensor:
         result_data = np.sum(self.data, axis=axis)
         result = Tensor(result_data, requires_grad=self.requires_grad)
 
+        # Set operation info
+        result._op_name = f"sum(axis={axis})"
+        result._children = [self]
+
         if self.requires_grad:
+
             def grad_fn(gradient):
                 if axis is None:
                     # For sum over all elements, broadcast gradient to original shape
@@ -315,12 +363,12 @@ class Tensor:
                         axes = [axis]
                     else:
                         axes = list(axis)
-                    
+
                     grad_expanded = gradient
                     for ax in sorted(axes):
                         grad_expanded = np.expand_dims(grad_expanded, axis=ax)
                     grad_expanded = np.broadcast_to(grad_expanded, self.data.shape)
-                
+
                 self.backward(grad_expanded)
 
             result.grad_fn = grad_fn
@@ -340,16 +388,16 @@ class Tensor:
     def __matmul__(self, other):
         """
         Matrix multiplication operation.
-        
+
         Args:
             other (Tensor): Right operand for matrix multiplication
-            
+
         Returns:
             Tensor: Result of matrix multiplication with gradient support
-            
+
         Raises:
             TypeError: If other is not a Tensor
-            
+
         Examples:
             >>> a = Tensor([[1, 2], [3, 4]])
             >>> b = Tensor([[5, 6], [7, 8]])
@@ -363,6 +411,10 @@ class Tensor:
         result_data = np.matmul(self.data, other.data)
         requires_grad = self.requires_grad or other.requires_grad
         result = Tensor(result_data, requires_grad=requires_grad)
+
+        # Set operation info
+        result._op_name = "matmul"
+        result._children = [self, other]
 
         if requires_grad:
 
@@ -383,17 +435,133 @@ class Tensor:
     def __neg__(self):
         """
         Unary negation.
-        
+
         Returns:
             Tensor: Negated tensor with gradient support
-            
+
         Examples:
             >>> a = Tensor([1, -2])
             >>> b = -a  # [-1, 2]
         """
+
         def grad_fn_factory(self_tensor, result_data):
             def grad_fn(gradient):
                 self_tensor.backward(-gradient)
+
             return grad_fn
 
         return self._unary_op(np.negative, grad_fn_factory)
+
+    def to_dot(self):
+        """
+        Generate a DOT graph representation of the computation graph.
+        
+        Returns:
+            str: DOT format string representing the computation graph
+            
+        Examples:
+            >>> x = Tensor([2.0], requires_grad=True).set_label('x')
+            >>> y = (x ** 2).set_label('y')
+            >>> print(y.to_dot())
+        """
+        def get_tensor_id(tensor):
+            return f"tensor_{id(tensor)}"
+        
+        def get_op_id(tensor):
+            return f"op_{id(tensor)}"
+        
+        def get_tensor_label(tensor):
+            shape_str = 'x'.join(map(str, tensor.shape))
+            
+            # Start with variable name or default
+            if tensor._label:
+                label_parts = [f"var: {tensor._label}"]
+            else:
+                label_parts = ["var: unnamed"]
+            
+            # Add shape
+            label_parts.append(f"shape: ({shape_str})")
+            
+            # Add current value (truncated for display)
+            data_str = str(tensor.data.flatten()[:3])
+            if len(tensor.data.flatten()) > 3:
+                data_str = data_str[:-1] + "...]"
+            label_parts.append(f"data: {data_str}")
+            
+            # Add gradient if available
+            if tensor.requires_grad:
+                if tensor.grad is not None:
+                    grad_str = str(tensor.grad.flatten()[:3])
+                    if len(tensor.grad.flatten()) > 3:
+                        grad_str = grad_str[:-1] + "...]"
+                    label_parts.append(f"grad: {grad_str}")
+                else:
+                    label_parts.append("grad: None")
+            
+            return "\\n".join(label_parts)
+        
+        def traverse(tensor, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes):
+            tensor_id = get_tensor_id(tensor)
+            
+            if tensor_id in visited_tensors:
+                return
+            visited_tensors.add(tensor_id)
+            
+            # Add tensor node
+            label = get_tensor_label(tensor)
+            color = "lightblue" if tensor.requires_grad else "lightgray"
+            is_leaf = not tensor._children  # Leaf if no children
+            
+            if is_leaf:
+                # Leaf nodes (inputs)
+                tensor_nodes.append(f'  {tensor_id} [label="{label}", fillcolor="{color}", style="filled", shape="box"];')
+            else:
+                # Result nodes
+                tensor_nodes.append(f'  {tensor_id} [label="{label}", fillcolor="{color}", style="filled", shape="box"];')
+            
+            # If this tensor has an operation, create operation node
+            if tensor._op_name and tensor._children:
+                op_id = get_op_id(tensor)
+                
+                if op_id not in visited_ops:
+                    visited_ops.add(op_id)
+                    # Operation node (round)
+                    op_nodes.append(f'  {op_id} [label="{tensor._op_name}", fillcolor="orange", style="filled", shape="circle"];')
+                    
+                    # Connect operation to result tensor
+                    edges.append(f'  {op_id} -> {tensor_id};')
+                    
+                    # Connect input tensors to operation
+                    for child in tensor._children:
+                        child_id = get_tensor_id(child)
+                        edges.append(f'  {child_id} -> {op_id};')
+                        traverse(child, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes)
+        
+        visited_tensors = set()
+        visited_ops = set()
+        edges = []
+        tensor_nodes = []
+        op_nodes = []
+        
+        traverse(self, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes)
+        
+        dot_code = [
+            'digraph computation_graph {',
+            '  rankdir=BT;',
+            '  node [fontsize=9, margin=0.1];',
+            ''
+        ]
+        
+        # Add tensor nodes
+        dot_code.extend(tensor_nodes)
+        dot_code.append('')
+        
+        # Add operation nodes
+        dot_code.extend(op_nodes)
+        dot_code.append('')
+        
+        # Add edges
+        dot_code.extend(edges)
+        dot_code.append('}')
+        
+        return '\n'.join(dot_code)

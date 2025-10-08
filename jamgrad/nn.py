@@ -72,6 +72,10 @@ def relu(x):
     data = np.maximum(0, x.data)
     result = Tensor(data, requires_grad=x.requires_grad)
 
+    # Set operation info for graph visualization
+    result._op_name = "ReLU"
+    result._children = [x]
+
     if x.requires_grad:
 
         def grad_fn(gradient):
@@ -127,6 +131,10 @@ def softmax(x):
     # This is equivalent to exp_vals / sum_exp_expanded but maintains gradients
     result = exp_vals * (Tensor([1.0]) / sum_exp_expanded)
     
+    # Override the operation name for better visualization
+    result._op_name = "Softmax"
+    result._children = [x]
+    
     return result
 
 
@@ -160,5 +168,9 @@ def cross_entropy_loss(predictions, targets):
     # Compute cross entropy: -sum(targets * log(predictions))
     log_probs = pred_clipped.log()
     loss = -(targets * log_probs).sum() * (1.0 / targets.data.shape[0])
+    
+    # Override the operation name for better visualization
+    loss._op_name = "CrossEntropy"
+    loss._children = [predictions, targets]
 
     return loss

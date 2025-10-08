@@ -35,9 +35,11 @@ print(f"dz/dx: {x.grad}")
 
 # Multiple operations
 print("\n=== Complex Expression ===")
-x = Tensor([1.0], requires_grad=True)
-y = Tensor([2.0], requires_grad=True)
+x = Tensor([1.0], requires_grad=True).set_label('x')
+y = Tensor([2.0], requires_grad=True).set_label('y')
 z = (x**2 + y) * x.exp() + y.log()
+z.set_label('z')
+
 print(f"x: {x}")
 print(f"y: {y}")
 print(f"z = (x^2 + y) * exp(x) + log(y): {z}")
@@ -45,3 +47,13 @@ print(f"z = (x^2 + y) * exp(x) + log(y): {z}")
 z.backward()
 print(f"dz/dx: {x.grad}")
 print(f"dz/dy: {y.grad}")
+
+# Computation graph visualization
+print("\n=== Computation Graph (with gradients) ===")
+print("DOT representation:")
+print(z.to_dot())
+
+with open("computation_graph.dot", "w") as f:
+    f.write(z.to_dot())
+print("DOT file saved as computation_graph.dot")
+print("To render: dot -Tpng computation_graph.dot -o computation_graph.png")

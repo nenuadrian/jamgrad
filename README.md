@@ -26,6 +26,10 @@ With coverage:
 pytest tests --cov=jamgrad
 ```
 
+## visualisation of computation graph
+
+![graphviz](./assets/graphviz.svg)
+
 ## documentation
 
 Generate documentation using Sphinx:
