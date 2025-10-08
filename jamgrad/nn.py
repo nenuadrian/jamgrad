@@ -1,10 +1,3 @@
-"""
-Neural network modules and functions for JamGrad.
-
-This module provides building blocks for creating neural networks,
-including layers, activation functions, and utilities.
-"""
-
 from .tensor import Tensor
 import numpy as np
 
@@ -92,16 +85,30 @@ def relu(x):
 
 
 def softmax(x):
-    exp_x = x.exp()
-    sum_exp = exp_x.sum(axis=1)
+    exp_vals = x.exp()
+    sum_exp = exp_vals.sum(axis=1)
 
-    # Expand dims for broadcasting
-    sum_exp_expanded = Tensor(
-        np.expand_dims(sum_exp.data, axis=1),
-        requires_grad=sum_exp.requires_grad,
-    )
+    # Manual broadcasting for division
+    result_data = np.zeros_like(exp_vals.data)
+    for i in range(exp_vals.data.shape[0]):
+        result_data[i] = exp_vals.data[i] / sum_exp.data[i]
 
-    return exp_x * (1.0 / sum_exp_expanded)
+    result = Tensor(result_data, requires_grad=x.requires_grad)
+
+    if x.requires_grad:
+
+        def grad_fn(gradient):
+            # Simplified softmax gradient
+            s = result.data
+            grad_input = np.zeros_like(s)
+            for i in range(s.shape[0]):
+                jacobian = np.diag(s[i]) - np.outer(s[i], s[i])
+                grad_input[i] = gradient[i] @ jacobian
+            x.backward(grad_input)
+
+        result.grad_fn = grad_fn
+
+    return result
 
 
 def cross_entropy_loss(predictions, targets):

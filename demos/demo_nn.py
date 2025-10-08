@@ -1,21 +1,6 @@
 from jamgrad import Tensor
-from jamgrad.nn import Linear
+from jamgrad.nn import Linear, relu
 import numpy as np
-
-
-def relu(x):
-    data = np.maximum(0, x.data)
-    result = Tensor(data, requires_grad=x.requires_grad)
-
-    if x.requires_grad:
-
-        def grad_fn(gradient):
-            relu_grad = (x.data > 0).astype(np.float32)
-            x.backward(gradient * relu_grad)
-
-        result.grad_fn = grad_fn
-
-    return result
 
 
 def mse_loss(predictions, targets):

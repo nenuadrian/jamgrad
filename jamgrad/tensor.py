@@ -32,7 +32,6 @@ class Tensor:
         self.requires_grad = requires_grad
         self.grad = None
         self.grad_fn = grad_fn
-        self._backward_hooks: List[Callable] = []
 
     def __repr__(self):
         """String representation of the tensor."""

@@ -1,5 +1,5 @@
 from jamgrad import Tensor
-from jamgrad.nn import Linear, relu
+from jamgrad.nn import Linear, relu, softmax, cross_entropy_loss
 import numpy as np
 from sklearn.datasets import fetch_openml
 from sklearn.preprocessing import StandardScaler
@@ -34,44 +34,6 @@ def accuracy(predictions, targets):
     pred_classes = np.argmax(predictions.data, axis=1)
     target_classes = np.argmax(targets.data, axis=1)
     return np.mean(pred_classes == target_classes)
-
-
-def softmax(x):
-    exp_vals = x.exp()
-    sum_exp = exp_vals.sum(axis=1)
-
-    # Manual broadcasting for division
-    result_data = np.zeros_like(exp_vals.data)
-    for i in range(exp_vals.data.shape[0]):
-        result_data[i] = exp_vals.data[i] / sum_exp.data[i]
-
-    result = Tensor(result_data, requires_grad=x.requires_grad)
-
-    if x.requires_grad:
-
-        def grad_fn(gradient):
-            # Simplified softmax gradient
-            s = result.data
-            grad_input = np.zeros_like(s)
-            for i in range(s.shape[0]):
-                jacobian = np.diag(s[i]) - np.outer(s[i], s[i])
-                grad_input[i] = gradient[i] @ jacobian
-            x.backward(grad_input)
-
-        result.grad_fn = grad_fn
-
-    return result
-
-
-def cross_entropy_loss(predictions, targets):
-    eps = 1e-15
-    pred_clipped = Tensor(
-        np.clip(predictions.data, eps, 1 - eps), requires_grad=predictions.requires_grad
-    )
-
-    log_probs = pred_clipped.log()
-    loss = (targets * log_probs * -1.0).sum() * (1.0 / targets.data.shape[0])
-    return loss
 
 
 class MNISTNet:
