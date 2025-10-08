@@ -209,3 +209,6 @@ __marimo__/
 _**
 
 *.dot
+
+.DS_Store
+**/.DS_Store
