@@ -1,5 +1,3 @@
-import numpy as np
-
 from jamgrad import Tensor
 
 
@@ -35,10 +33,10 @@ print(f"dz/dx: {x.grad}")
 
 # Multiple operations
 print("\n=== Complex Expression ===")
-x = Tensor([1.0], requires_grad=True).set_label('x')
-y = Tensor([2.0], requires_grad=True).set_label('y')
+x = Tensor([1.0], requires_grad=True).set_label("x")
+y = Tensor([2.0], requires_grad=True).set_label("y")
 z = (x**2 + y) * x.exp() + y.log()
-z.set_label('z')
+z.set_label("z")
 
 print(f"x: {x}")
 print(f"y: {y}")
