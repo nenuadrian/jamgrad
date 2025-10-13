@@ -26,10 +26,6 @@ With coverage:
 pytest tests --cov=jamgrad
 ```
 
-## visualisation of computation graph
-
-![graphviz](./assets/graphviz.svg)
-
 ## documentation
 
 Generate documentation using Sphinx:
@@ -56,3 +52,43 @@ from jamgrad.nn import Linear
 layer = Linear(2, 1)
 output = layer(Tensor([[1.0, 2.0]]))
 ```
+
+## demo
+
+$$
+z = (x^2 + y) \, e^x + \ln(y)
+$$
+
+$$
+\frac{\partial z}{\partial x}
+= \frac{\partial}{\partial x} \big[ (x^2 + y)e^x + \ln(y) \big]
+= (2x)e^x + (x^2 + y)e^x
+= e^x (2x + x^2 + y)
+$$
+
+$$
+\text{At } x = 1, \, y = 2:
+\quad
+\frac{\partial z}{\partial x} = e^1 (2 + 1 + 2) = 5e \approx 13.591409
+$$
+
+$$
+\frac{\partial z}{\partial y}
+= \frac{\partial}{\partial y} \big[ (x^2 + y)e^x + \ln(y) \big]
+= e^x + \frac{1}{y}
+$$
+
+$$
+\text{At } x = 1, \, y = 2:
+\quad
+\frac{\partial z}{\partial y} = e^1 + \frac{1}{2} = e + 0.5 \approx 3.2182818
+$$
+
+$$
+z = (1^2 + 2)e^1 + \ln(2)
+= 3e + \ln(2)
+\approx 8.847993
+$$
+
+### viz
+![graphviz](./assets/graphviz.svg)
