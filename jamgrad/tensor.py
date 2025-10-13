@@ -33,19 +33,19 @@ class Tensor:
         self.grad = None
         self.grad_fn = grad_fn
         self._op_name = None  # Name of the operation that created this tensor
-        self._children = []   # Child tensors in computation graph
-        self._label = None    # User-defined label for this tensor
+        self._children = []  # Child tensors in computation graph
+        self._label = None  # User-defined label for this tensor
 
     def set_label(self, label):
         """
         Set a human-readable label for this tensor.
-        
+
         Args:
             label (str): Label for the tensor (e.g., 'x', 'weight', 'loss')
-            
+
         Returns:
             Tensor: Self for method chaining
-            
+
         Examples:
             >>> x = Tensor([2.0], requires_grad=True).set_label('x')
             >>> y = (x ** 2).set_label('y')
@@ -444,7 +444,7 @@ class Tensor:
             >>> b = -a  # [-1, 2]
         """
 
-        def grad_fn_factory(self_tensor, result_data):
+        def grad_fn_factory(self_tensor, _):
             def grad_fn(gradient):
                 self_tensor.backward(-gradient)
 
@@ -454,114 +454,101 @@ class Tensor:
 
     def to_dot(self):
         """
-        Generate a DOT graph representation of the computation graph.
-        
+        Generate a DOT graph representation of the computation graph (left-to-right).
+
         Returns:
             str: DOT format string representing the computation graph
-            
-        Examples:
-            >>> x = Tensor([2.0], requires_grad=True).set_label('x')
-            >>> y = (x ** 2).set_label('y')
-            >>> print(y.to_dot())
         """
+
         def get_tensor_id(tensor):
             return f"tensor_{id(tensor)}"
-        
+
         def get_op_id(tensor):
             return f"op_{id(tensor)}"
-        
+
         def get_tensor_label(tensor):
-            shape_str = 'x'.join(map(str, tensor.shape))
-            
-            # Start with variable name or default
+            """Build readable label for a tensor node."""
+            label_parts = []
             if tensor._label:
-                label_parts = [f"var: {tensor._label}"]
+                label_parts.append(f"{tensor._label}")
             else:
-                label_parts = ["var: unnamed"]
-            
-            # Add shape
-            label_parts.append(f"shape: ({shape_str})")
-            
-            # Add current value (truncated for display)
-            data_str = str(tensor.data.flatten()[:3])
-            if len(tensor.data.flatten()) > 3:
-                data_str = data_str[:-1] + "...]"
-            label_parts.append(f"data: {data_str}")
-            
-            # Add gradient if available
+                label_parts.append("unnamed")
+
+            shape_str = "x".join(map(str, tensor.shape))
+            label_parts.append(f"shape=({shape_str})")
+
+            val = np.array2string(tensor.data.flatten()[:3], precision=4, separator=",")
+            if tensor.data.size > 3:
+                val = val[:-1] + ", ...]"
+            label_parts.append(f"val={val}")
+
             if tensor.requires_grad:
                 if tensor.grad is not None:
-                    grad_str = str(tensor.grad.flatten()[:3])
-                    if len(tensor.grad.flatten()) > 3:
-                        grad_str = grad_str[:-1] + "...]"
-                    label_parts.append(f"grad: {grad_str}")
+                    grad_str = np.array2string(
+                        tensor.grad.flatten()[:3], precision=4, separator=","
+                    )
+                    if tensor.grad.size > 3:
+                        grad_str = grad_str[:-1] + ", ...]"
+                    label_parts.append(f"grad={grad_str}")
                 else:
-                    label_parts.append("grad: None")
-            
+                    label_parts.append("grad=None")
+
             return "\\n".join(label_parts)
-        
-        def traverse(tensor, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes):
-            tensor_id = get_tensor_id(tensor)
-            
-            if tensor_id in visited_tensors:
+
+        def traverse(
+            tensor, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes
+        ):
+            tid = get_tensor_id(tensor)
+            if tid in visited_tensors:
                 return
-            visited_tensors.add(tensor_id)
-            
-            # Add tensor node
-            label = get_tensor_label(tensor)
+            visited_tensors.add(tid)
+
+            # Tensor node styling
             color = "lightblue" if tensor.requires_grad else "lightgray"
-            is_leaf = not tensor._children  # Leaf if no children
-            
-            if is_leaf:
-                # Leaf nodes (inputs)
-                tensor_nodes.append(f'  {tensor_id} [label="{label}", fillcolor="{color}", style="filled", shape="box"];')
-            else:
-                # Result nodes
-                tensor_nodes.append(f'  {tensor_id} [label="{label}", fillcolor="{color}", style="filled", shape="box"];')
-            
-            # If this tensor has an operation, create operation node
+            label = get_tensor_label(tensor)
+            tensor_nodes.append(
+                f'  {tid} [label="{label}", shape="box", style="filled,rounded", fillcolor="{color}"];'
+            )
+
+            # If this tensor came from an operation
             if tensor._op_name and tensor._children:
-                op_id = get_op_id(tensor)
-                
-                if op_id not in visited_ops:
-                    visited_ops.add(op_id)
-                    # Operation node (round)
-                    op_nodes.append(f'  {op_id} [label="{tensor._op_name}", fillcolor="orange", style="filled", shape="circle"];')
-                    
-                    # Connect operation to result tensor
-                    edges.append(f'  {op_id} -> {tensor_id};')
-                    
-                    # Connect input tensors to operation
+                opid = get_op_id(tensor)
+                if opid not in visited_ops:
+                    visited_ops.add(opid)
+                    op_nodes.append(
+                        f'  {opid} [label="{tensor._op_name}", shape="circle", style="filled", fillcolor="orange"];'
+                    )
+
+                    # Operation → output edge
+                    edges.append(f"  {opid} -> {tid};")
+
+                    # Input → operation edges
                     for child in tensor._children:
-                        child_id = get_tensor_id(child)
-                        edges.append(f'  {child_id} -> {op_id};')
-                        traverse(child, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes)
-        
-        visited_tensors = set()
-        visited_ops = set()
-        edges = []
-        tensor_nodes = []
-        op_nodes = []
-        
+                        cid = get_tensor_id(child)
+                        edges.append(f"  {cid} -> {opid};")
+                        traverse(
+                            child,
+                            visited_tensors,
+                            visited_ops,
+                            edges,
+                            tensor_nodes,
+                            op_nodes,
+                        )
+
+        visited_tensors, visited_ops = set(), set()
+        edges, tensor_nodes, op_nodes = [], [], []
         traverse(self, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes)
-        
-        dot_code = [
-            'digraph computation_graph {',
-            '  rankdir=BT;',
-            '  node [fontsize=9, margin=0.1];',
-            ''
+
+        dot = [
+            "digraph ComputationGraph {",
+            "  rankdir=LR;",
+            "  node [fontsize=9, margin=0.1];",
+            "",
+            *tensor_nodes,
+            "",
+            *op_nodes,
+            "",
+            *edges,
+            "}",
         ]
-        
-        # Add tensor nodes
-        dot_code.extend(tensor_nodes)
-        dot_code.append('')
-        
-        # Add operation nodes
-        dot_code.extend(op_nodes)
-        dot_code.append('')
-        
-        # Add edges
-        dot_code.extend(edges)
-        dot_code.append('}')
-        
-        return '\n'.join(dot_code)
+        return "\n".join(dot)

@@ -1,204 +1,204 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="237pt" height="814pt" viewBox="0.00 0.00 237.00 814.00">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 810.31)">
-<title>computation_graph</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-810.31 232.89,-810.31 232.89,4 -4,4"/>
-<!-- tensor_4391284048 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="851pt" height="211pt" viewBox="0.00 0.00 851.00 211.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 206.6)">
+<title>ComputationGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-206.6 846.99,-206.6 846.99,4 -4,4"/>
+<!-- tensor_4385828176 -->
 <g id="node1" class="node">
-<title>tensor_4391284048</title>
-<polygon fill="lightblue" stroke="black" points="181.64,-806.31 107.75,-806.31 107.75,-748.71 181.64,-748.71 181.64,-806.31"/>
-<text xml:space="preserve" text-anchor="middle" x="144.69" y="-791.01" font-family="Times,serif" font-size="9.00">var: z</text>
-<text xml:space="preserve" text-anchor="middle" x="144.69" y="-780.21" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="144.69" y="-769.41" font-family="Times,serif" font-size="9.00">data: [8.847992]</text>
-<text xml:space="preserve" text-anchor="middle" x="144.69" y="-758.61" font-family="Times,serif" font-size="9.00">grad: [1.]</text>
+<title>tensor_4385828176</title>
+<path fill="lightblue" stroke="black" d="M830.99,-98.6C830.99,-98.6 798.27,-98.6 798.27,-98.6 792.27,-98.6 786.27,-92.6 786.27,-86.6 786.27,-86.6 786.27,-53 786.27,-53 786.27,-47 792.27,-41 798.27,-41 798.27,-41 830.99,-41 830.99,-41 836.99,-41 842.99,-47 842.99,-53 842.99,-53 842.99,-86.6 842.99,-86.6 842.99,-92.6 836.99,-98.6 830.99,-98.6"/>
+<text xml:space="preserve" text-anchor="middle" x="814.63" y="-83.3" font-family="Times,serif" font-size="9.00">z</text>
+<text xml:space="preserve" text-anchor="middle" x="814.63" y="-72.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="814.63" y="-61.7" font-family="Times,serif" font-size="9.00">val=[8.848]</text>
+<text xml:space="preserve" text-anchor="middle" x="814.63" y="-50.9" font-family="Times,serif" font-size="9.00">grad=[1.]</text>
 </g>
-<!-- tensor_4379945408 -->
+<!-- tensor_4339329472 -->
 <g id="node2" class="node">
-<title>tensor_4379945408</title>
-<polygon fill="lightblue" stroke="black" points="149.64,-638.35 75.75,-638.35 75.75,-580.75 149.64,-580.75 149.64,-638.35"/>
-<text xml:space="preserve" text-anchor="middle" x="112.69" y="-623.05" font-family="Times,serif" font-size="9.00">var: unnamed</text>
-<text xml:space="preserve" text-anchor="middle" x="112.69" y="-612.25" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="112.69" y="-601.45" font-family="Times,serif" font-size="9.00">data: [8.154845]</text>
-<text xml:space="preserve" text-anchor="middle" x="112.69" y="-590.65" font-family="Times,serif" font-size="9.00">grad: [1.]</text>
+<title>tensor_4339329472</title>
+<path fill="lightblue" stroke="black" d="M663.91,-129.6C663.91,-129.6 626.7,-129.6 626.7,-129.6 620.7,-129.6 614.7,-123.6 614.7,-117.6 614.7,-117.6 614.7,-84 614.7,-84 614.7,-78 620.7,-72 626.7,-72 626.7,-72 663.91,-72 663.91,-72 669.91,-72 675.91,-78 675.91,-84 675.91,-84 675.91,-117.6 675.91,-117.6 675.91,-123.6 669.91,-129.6 663.91,-129.6"/>
+<text xml:space="preserve" text-anchor="middle" x="645.31" y="-114.3" font-family="Times,serif" font-size="9.00">unnamed</text>
+<text xml:space="preserve" text-anchor="middle" x="645.31" y="-103.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="645.31" y="-92.7" font-family="Times,serif" font-size="9.00">val=[8.1548]</text>
+<text xml:space="preserve" text-anchor="middle" x="645.31" y="-81.9" font-family="Times,serif" font-size="9.00">grad=[1.]</text>
 </g>
-<!-- op_4391284048 -->
+<!-- op_4385828176 -->
 <g id="node9" class="node">
-<title>op_4391284048</title>
-<ellipse fill="orange" stroke="black" cx="144.69" cy="-693.53" rx="19.18" ry="19.18"/>
-<text xml:space="preserve" text-anchor="middle" x="144.69" y="-690.83" font-family="Times,serif" font-size="9.00">add</text>
+<title>op_4385828176</title>
+<ellipse fill="orange" stroke="black" cx="731.09" cy="-69.8" rx="19.18" ry="19.18"/>
+<text xml:space="preserve" text-anchor="middle" x="731.09" y="-67.1" font-family="Times,serif" font-size="9.00">add</text>
 </g>
-<!-- tensor_4379945408&#45;&gt;op_4391284048 -->
+<!-- tensor_4339329472&#45;&gt;op_4385828176 -->
 <g id="edge2" class="edge">
-<title>tensor_4379945408-&gt;op_4391284048</title>
-<path fill="none" stroke="black" d="M123.71,-638.76C127.02,-647.26 130.66,-656.58 133.96,-665.03"/>
-<polygon fill="black" stroke="black" points="130.6,-666.06 137.5,-674.1 137.12,-663.51 130.6,-666.06"/>
+<title>tensor_4339329472-&gt;op_4385828176</title>
+<path fill="none" stroke="black" d="M676.08,-89.78C684.49,-86.67 693.61,-83.3 701.92,-80.22"/>
+<polygon fill="black" stroke="black" points="703.02,-83.55 711.19,-76.79 700.6,-76.98 703.02,-83.55"/>
 </g>
-<!-- tensor_4391546096 -->
+<!-- tensor_4385974192 -->
 <g id="node3" class="node">
-<title>tensor_4391546096</title>
-<polygon fill="lightblue" stroke="black" points="80.39,-445.87 1,-445.87 1,-388.27 80.39,-388.27 80.39,-445.87"/>
-<text xml:space="preserve" text-anchor="middle" x="40.69" y="-430.57" font-family="Times,serif" font-size="9.00">var: unnamed</text>
-<text xml:space="preserve" text-anchor="middle" x="40.69" y="-419.77" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="40.69" y="-408.97" font-family="Times,serif" font-size="9.00">data: [3.]</text>
-<text xml:space="preserve" text-anchor="middle" x="40.69" y="-398.17" font-family="Times,serif" font-size="9.00">grad: [2.7182817]</text>
+<title>tensor_4385974192</title>
+<path fill="lightblue" stroke="black" d="M467.82,-134.6C467.82,-134.6 425.61,-134.6 425.61,-134.6 419.61,-134.6 413.61,-128.6 413.61,-122.6 413.61,-122.6 413.61,-89 413.61,-89 413.61,-83 419.61,-77 425.61,-77 425.61,-77 467.82,-77 467.82,-77 473.82,-77 479.82,-83 479.82,-89 479.82,-89 479.82,-122.6 479.82,-122.6 479.82,-128.6 473.82,-134.6 467.82,-134.6"/>
+<text xml:space="preserve" text-anchor="middle" x="446.72" y="-119.3" font-family="Times,serif" font-size="9.00">unnamed</text>
+<text xml:space="preserve" text-anchor="middle" x="446.72" y="-108.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="446.72" y="-97.7" font-family="Times,serif" font-size="9.00">val=[3.]</text>
+<text xml:space="preserve" text-anchor="middle" x="446.72" y="-86.9" font-family="Times,serif" font-size="9.00">grad=[2.7183]</text>
 </g>
-<!-- op_4379945408 -->
+<!-- op_4339329472 -->
 <g id="node10" class="node">
-<title>op_4379945408</title>
-<ellipse fill="orange" stroke="black" cx="100.69" cy="-513.31" rx="31.44" ry="31.44"/>
-<text xml:space="preserve" text-anchor="middle" x="100.69" y="-510.61" font-family="Times,serif" font-size="9.00">multiply</text>
+<title>op_4339329472</title>
+<ellipse fill="orange" stroke="black" cx="547.26" cy="-106.8" rx="31.44" ry="31.44"/>
+<text xml:space="preserve" text-anchor="middle" x="547.26" y="-104.1" font-family="Times,serif" font-size="9.00">multiply</text>
 </g>
-<!-- tensor_4391546096&#45;&gt;op_4379945408 -->
+<!-- tensor_4385974192&#45;&gt;op_4339329472 -->
 <g id="edge4" class="edge">
-<title>tensor_4391546096-&gt;op_4379945408</title>
-<path fill="none" stroke="black" d="M58.7,-446.35C64.75,-455.86 71.59,-466.6 77.97,-476.61"/>
-<polygon fill="black" stroke="black" points="75,-478.48 83.32,-485.03 80.91,-474.72 75,-478.48"/>
+<title>tensor_4385974192-&gt;op_4339329472</title>
+<path fill="none" stroke="black" d="M480.26,-106.13C487.86,-106.21 496.08,-106.29 504.04,-106.37"/>
+<polygon fill="black" stroke="black" points="503.88,-109.87 513.91,-106.47 503.95,-102.87 503.88,-109.87"/>
 </g>
-<!-- tensor_4392141600 -->
+<!-- tensor_4340656288 -->
 <g id="node4" class="node">
-<title>tensor_4392141600</title>
-<polygon fill="lightblue" stroke="black" points="79.39,-258.67 0,-258.67 0,-201.07 79.39,-201.07 79.39,-258.67"/>
-<text xml:space="preserve" text-anchor="middle" x="39.69" y="-243.37" font-family="Times,serif" font-size="9.00">var: unnamed</text>
-<text xml:space="preserve" text-anchor="middle" x="39.69" y="-232.57" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="39.69" y="-221.77" font-family="Times,serif" font-size="9.00">data: [1.]</text>
-<text xml:space="preserve" text-anchor="middle" x="39.69" y="-210.97" font-family="Times,serif" font-size="9.00">grad: [2.7182817]</text>
+<title>tensor_4340656288</title>
+<path fill="lightblue" stroke="black" d="M268.4,-133.6C268.4,-133.6 226.18,-133.6 226.18,-133.6 220.18,-133.6 214.18,-127.6 214.18,-121.6 214.18,-121.6 214.18,-88 214.18,-88 214.18,-82 220.18,-76 226.18,-76 226.18,-76 268.4,-76 268.4,-76 274.4,-76 280.4,-82 280.4,-88 280.4,-88 280.4,-121.6 280.4,-121.6 280.4,-127.6 274.4,-133.6 268.4,-133.6"/>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-118.3" font-family="Times,serif" font-size="9.00">unnamed</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-107.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-96.7" font-family="Times,serif" font-size="9.00">val=[1.]</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-85.9" font-family="Times,serif" font-size="9.00">grad=[2.7183]</text>
 </g>
-<!-- op_4391546096 -->
+<!-- op_4385974192 -->
 <g id="node11" class="node">
-<title>op_4391546096</title>
-<ellipse fill="orange" stroke="black" cx="38.69" cy="-323.47" rx="19.18" ry="19.18"/>
-<text xml:space="preserve" text-anchor="middle" x="38.69" y="-320.77" font-family="Times,serif" font-size="9.00">add</text>
+<title>op_4385974192</title>
+<ellipse fill="orange" stroke="black" cx="347" cy="-104.8" rx="19.18" ry="19.18"/>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-102.1" font-family="Times,serif" font-size="9.00">add</text>
 </g>
-<!-- tensor_4392141600&#45;&gt;op_4391546096 -->
+<!-- tensor_4340656288&#45;&gt;op_4385974192 -->
 <g id="edge6" class="edge">
-<title>tensor_4392141600-&gt;op_4391546096</title>
-<path fill="none" stroke="black" d="M39.39,-258.85C39.27,-269.48 39.14,-281.62 39.02,-292.43"/>
-<polygon fill="black" stroke="black" points="35.52,-292.37 38.91,-302.41 42.52,-292.44 35.52,-292.37"/>
+<title>tensor_4340656288-&gt;op_4385974192</title>
+<path fill="none" stroke="black" d="M280.83,-104.8C292.24,-104.8 305,-104.8 316.18,-104.8"/>
+<polygon fill="black" stroke="black" points="316.05,-108.3 326.05,-104.8 316.05,-101.3 316.05,-108.3"/>
 </g>
-<!-- tensor_4392112208 -->
+<!-- tensor_4340950608 -->
 <g id="node5" class="node">
-<title>tensor_4392112208</title>
-<polygon fill="lightblue" stroke="black" points="116.39,-57.6 37,-57.6 37,0 116.39,0 116.39,-57.6"/>
-<text xml:space="preserve" text-anchor="middle" x="76.69" y="-42.3" font-family="Times,serif" font-size="9.00">var: x</text>
-<text xml:space="preserve" text-anchor="middle" x="76.69" y="-31.5" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="76.69" y="-20.7" font-family="Times,serif" font-size="9.00">data: [1.]</text>
-<text xml:space="preserve" text-anchor="middle" x="76.69" y="-9.9" font-family="Times,serif" font-size="9.00">grad: [13.591409]</text>
+<title>tensor_4340950608</title>
+<path fill="lightblue" stroke="black" d="M58.71,-168.6C58.71,-168.6 12,-168.6 12,-168.6 6,-168.6 0,-162.6 0,-156.6 0,-156.6 0,-123 0,-123 0,-117 6,-111 12,-111 12,-111 58.71,-111 58.71,-111 64.71,-111 70.71,-117 70.71,-123 70.71,-123 70.71,-156.6 70.71,-156.6 70.71,-162.6 64.71,-168.6 58.71,-168.6"/>
+<text xml:space="preserve" text-anchor="middle" x="35.36" y="-153.3" font-family="Times,serif" font-size="9.00">x</text>
+<text xml:space="preserve" text-anchor="middle" x="35.36" y="-142.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="35.36" y="-131.7" font-family="Times,serif" font-size="9.00">val=[1.]</text>
+<text xml:space="preserve" text-anchor="middle" x="35.36" y="-120.9" font-family="Times,serif" font-size="9.00">grad=[13.5914]</text>
 </g>
-<!-- op_4392141600 -->
+<!-- op_4340656288 -->
 <g id="node12" class="node">
-<title>op_4392141600</title>
-<ellipse fill="orange" stroke="black" cx="40.69" cy="-129.34" rx="35.74" ry="35.74"/>
-<text xml:space="preserve" text-anchor="middle" x="40.69" y="-126.64" font-family="Times,serif" font-size="9.00">&lt;lambda&gt;</text>
+<title>op_4340656288</title>
+<ellipse fill="orange" stroke="black" cx="142.45" cy="-103.8" rx="35.74" ry="35.74"/>
+<text xml:space="preserve" text-anchor="middle" x="142.45" y="-101.1" font-family="Times,serif" font-size="9.00">&lt;lambda&gt;</text>
 </g>
-<!-- tensor_4392112208&#45;&gt;op_4392141600 -->
+<!-- tensor_4340950608&#45;&gt;op_4340656288 -->
 <g id="edge8" class="edge">
-<title>tensor_4392112208-&gt;op_4392141600</title>
-<path fill="none" stroke="black" d="M66.38,-58.04C63.36,-66.28 60,-75.5 56.72,-84.47"/>
-<polygon fill="black" stroke="black" points="53.46,-83.2 53.31,-93.8 60.03,-85.61 53.46,-83.2"/>
+<title>tensor_4340950608-&gt;op_4340656288</title>
+<path fill="none" stroke="black" d="M71.06,-127.91C79.47,-125.03 88.56,-121.92 97.34,-118.91"/>
+<polygon fill="black" stroke="black" points="98.45,-122.23 106.78,-115.68 96.18,-115.61 98.45,-122.23"/>
 </g>
-<!-- op_4391545872 -->
+<!-- op_4385974864 -->
 <g id="node13" class="node">
-<title>op_4391545872</title>
-<ellipse fill="orange" stroke="black" cx="113.69" cy="-129.34" rx="19.18" ry="19.18"/>
-<text xml:space="preserve" text-anchor="middle" x="113.69" y="-126.64" font-family="Times,serif" font-size="9.00">exp</text>
+<title>op_4385974864</title>
+<ellipse fill="orange" stroke="black" cx="142.45" cy="-176.8" rx="19.18" ry="19.18"/>
+<text xml:space="preserve" text-anchor="middle" x="142.45" y="-174.1" font-family="Times,serif" font-size="9.00">exp</text>
 </g>
-<!-- tensor_4392112208&#45;&gt;op_4391545872 -->
+<!-- tensor_4340950608&#45;&gt;op_4385974864 -->
 <g id="edge12" class="edge">
-<title>tensor_4392112208-&gt;op_4391545872</title>
-<path fill="none" stroke="black" d="M87.3,-58.04C92.3,-71.37 98.26,-87.22 103.24,-100.5"/>
-<polygon fill="black" stroke="black" points="99.83,-101.39 106.63,-109.52 106.39,-98.93 99.83,-101.39"/>
+<title>tensor_4340950608-&gt;op_4385974864</title>
+<path fill="none" stroke="black" d="M71.06,-152.02C84.75,-156.84 100.27,-162.3 113.24,-166.87"/>
+<polygon fill="black" stroke="black" points="111.86,-170.09 122.46,-170.11 114.19,-163.49 111.86,-170.09"/>
 </g>
-<!-- tensor_4381957712 -->
+<!-- tensor_4340653648 -->
 <g id="node6" class="node">
-<title>tensor_4381957712</title>
-<polygon fill="lightblue" stroke="black" points="225.39,-258.67 146,-258.67 146,-201.07 225.39,-201.07 225.39,-258.67"/>
-<text xml:space="preserve" text-anchor="middle" x="185.69" y="-243.37" font-family="Times,serif" font-size="9.00">var: y</text>
-<text xml:space="preserve" text-anchor="middle" x="185.69" y="-232.57" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="185.69" y="-221.77" font-family="Times,serif" font-size="9.00">data: [2.]</text>
-<text xml:space="preserve" text-anchor="middle" x="185.69" y="-210.97" font-family="Times,serif" font-size="9.00">grad: [3.2182817]</text>
+<title>tensor_4340653648</title>
+<path fill="lightblue" stroke="black" d="M268.4,-57.6C268.4,-57.6 226.18,-57.6 226.18,-57.6 220.18,-57.6 214.18,-51.6 214.18,-45.6 214.18,-45.6 214.18,-12 214.18,-12 214.18,-6 220.18,0 226.18,0 226.18,0 268.4,0 268.4,0 274.4,0 280.4,-6 280.4,-12 280.4,-12 280.4,-45.6 280.4,-45.6 280.4,-51.6 274.4,-57.6 268.4,-57.6"/>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-42.3" font-family="Times,serif" font-size="9.00">y</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-31.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-20.7" font-family="Times,serif" font-size="9.00">val=[2.]</text>
+<text xml:space="preserve" text-anchor="middle" x="247.29" y="-9.9" font-family="Times,serif" font-size="9.00">grad=[3.2183]</text>
 </g>
-<!-- tensor_4381957712&#45;&gt;op_4391546096 -->
+<!-- tensor_4340653648&#45;&gt;op_4385974192 -->
 <g id="edge9" class="edge">
-<title>tensor_4381957712-&gt;op_4391546096</title>
-<path fill="none" stroke="black" d="M145.67,-248.72C121.73,-260.25 91.29,-276.48 66.69,-294.67 64.11,-296.58 61.54,-298.72 59.05,-300.95"/>
-<polygon fill="black" stroke="black" points="56.95,-298.12 52.17,-307.57 61.8,-303.16 56.95,-298.12"/>
+<title>tensor_4340653648-&gt;op_4385974192</title>
+<path fill="none" stroke="black" d="M280.83,-54.11C294.45,-64.71 309.99,-76.79 322.48,-86.5"/>
+<polygon fill="black" stroke="black" points="320.11,-89.1 330.16,-92.47 324.41,-83.57 320.11,-89.1"/>
 </g>
-<!-- op_4391283088 -->
+<!-- op_4385828368 -->
 <g id="node14" class="node">
-<title>op_4391283088</title>
-<ellipse fill="orange" stroke="black" cx="189.69" cy="-323.47" rx="18.13" ry="18.13"/>
-<text xml:space="preserve" text-anchor="middle" x="189.69" y="-320.77" font-family="Times,serif" font-size="9.00">log</text>
+<title>op_4385828368</title>
+<ellipse fill="orange" stroke="black" cx="347" cy="-28.8" rx="18.13" ry="18.13"/>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-26.1" font-family="Times,serif" font-size="9.00">log</text>
 </g>
-<!-- tensor_4381957712&#45;&gt;op_4391283088 -->
+<!-- tensor_4340653648&#45;&gt;op_4385828368 -->
 <g id="edge15" class="edge">
-<title>tensor_4381957712-&gt;op_4391283088</title>
-<path fill="none" stroke="black" d="M186.92,-258.85C187.4,-269.9 187.95,-282.59 188.44,-293.72"/>
-<polygon fill="black" stroke="black" points="184.93,-293.67 188.87,-303.51 191.93,-293.37 184.93,-293.67"/>
+<title>tensor_4340653648-&gt;op_4385828368</title>
+<path fill="none" stroke="black" d="M280.83,-28.8C292.49,-28.8 305.55,-28.8 316.9,-28.8"/>
+<polygon fill="black" stroke="black" points="316.88,-32.3 326.88,-28.8 316.88,-25.3 316.88,-32.3"/>
 </g>
-<!-- tensor_4391545872 -->
+<!-- tensor_4385974864 -->
 <g id="node7" class="node">
-<title>tensor_4391545872</title>
-<polygon fill="lightblue" stroke="black" points="153.89,-352.27 75.5,-352.27 75.5,-294.67 153.89,-294.67 153.89,-352.27"/>
-<text xml:space="preserve" text-anchor="middle" x="114.69" y="-336.97" font-family="Times,serif" font-size="9.00">var: unnamed</text>
-<text xml:space="preserve" text-anchor="middle" x="114.69" y="-326.17" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="114.69" y="-315.37" font-family="Times,serif" font-size="9.00">data: [2.7182817]</text>
-<text xml:space="preserve" text-anchor="middle" x="114.69" y="-304.57" font-family="Times,serif" font-size="9.00">grad: [3.]</text>
+<title>tensor_4385974864</title>
+<path fill="lightblue" stroke="black" d="M365.61,-202.6C365.61,-202.6 328.4,-202.6 328.4,-202.6 322.4,-202.6 316.4,-196.6 316.4,-190.6 316.4,-190.6 316.4,-157 316.4,-157 316.4,-151 322.4,-145 328.4,-145 328.4,-145 365.61,-145 365.61,-145 371.61,-145 377.61,-151 377.61,-157 377.61,-157 377.61,-190.6 377.61,-190.6 377.61,-196.6 371.61,-202.6 365.61,-202.6"/>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-187.3" font-family="Times,serif" font-size="9.00">unnamed</text>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-176.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-165.7" font-family="Times,serif" font-size="9.00">val=[2.7183]</text>
+<text xml:space="preserve" text-anchor="middle" x="347" y="-154.9" font-family="Times,serif" font-size="9.00">grad=[3.]</text>
 </g>
-<!-- tensor_4391545872&#45;&gt;op_4379945408 -->
+<!-- tensor_4385974864&#45;&gt;op_4339329472 -->
 <g id="edge10" class="edge">
-<title>tensor_4391545872-&gt;op_4379945408</title>
-<path fill="none" stroke="black" d="M112.6,-352.59C110.27,-383.81 106.49,-434.51 103.82,-470.4"/>
-<polygon fill="black" stroke="black" points="100.36,-469.75 103.1,-479.99 107.34,-470.27 100.36,-469.75"/>
+<title>tensor_4385974864-&gt;op_4339329472</title>
+<path fill="none" stroke="black" d="M378.03,-169.47C405.22,-164.96 446.07,-156.73 479.82,-143.8 490.16,-139.84 500.86,-134.5 510.57,-129.11"/>
+<polygon fill="black" stroke="black" points="512.03,-132.31 518.96,-124.29 508.54,-126.24 512.03,-132.31"/>
 </g>
-<!-- tensor_4391283088 -->
+<!-- tensor_4385828368 -->
 <g id="node8" class="node">
-<title>tensor_4391283088</title>
-<polygon fill="lightblue" stroke="black" points="228.89,-542.11 150.5,-542.11 150.5,-484.51 228.89,-484.51 228.89,-542.11"/>
-<text xml:space="preserve" text-anchor="middle" x="189.69" y="-526.81" font-family="Times,serif" font-size="9.00">var: unnamed</text>
-<text xml:space="preserve" text-anchor="middle" x="189.69" y="-516.01" font-family="Times,serif" font-size="9.00">shape: (1)</text>
-<text xml:space="preserve" text-anchor="middle" x="189.69" y="-505.21" font-family="Times,serif" font-size="9.00">data: [0.6931472]</text>
-<text xml:space="preserve" text-anchor="middle" x="189.69" y="-494.41" font-family="Times,serif" font-size="9.00">grad: [1.]</text>
+<title>tensor_4385828368</title>
+<path fill="lightblue" stroke="black" d="M565.87,-57.6C565.87,-57.6 528.65,-57.6 528.65,-57.6 522.65,-57.6 516.65,-51.6 516.65,-45.6 516.65,-45.6 516.65,-12 516.65,-12 516.65,-6 522.65,0 528.65,0 528.65,0 565.87,0 565.87,0 571.87,0 577.87,-6 577.87,-12 577.87,-12 577.87,-45.6 577.87,-45.6 577.87,-51.6 571.87,-57.6 565.87,-57.6"/>
+<text xml:space="preserve" text-anchor="middle" x="547.26" y="-42.3" font-family="Times,serif" font-size="9.00">unnamed</text>
+<text xml:space="preserve" text-anchor="middle" x="547.26" y="-31.5" font-family="Times,serif" font-size="9.00">shape=(1)</text>
+<text xml:space="preserve" text-anchor="middle" x="547.26" y="-20.7" font-family="Times,serif" font-size="9.00">val=[0.6931]</text>
+<text xml:space="preserve" text-anchor="middle" x="547.26" y="-9.9" font-family="Times,serif" font-size="9.00">grad=[1.]</text>
 </g>
-<!-- tensor_4391283088&#45;&gt;op_4391284048 -->
+<!-- tensor_4385828368&#45;&gt;op_4385828176 -->
 <g id="edge13" class="edge">
-<title>tensor_4391283088-&gt;op_4391284048</title>
-<path fill="none" stroke="black" d="M182.74,-542.41C176.5,-567.56 167.06,-605.43 158.69,-638.35 156.61,-646.54 154.33,-655.42 152.22,-663.58"/>
-<polygon fill="black" stroke="black" points="148.89,-662.45 149.78,-673.01 155.67,-664.21 148.89,-662.45"/>
+<title>tensor_4385828368-&gt;op_4385828176</title>
+<path fill="none" stroke="black" d="M578.29,-35.57C612.39,-43.26 667.66,-55.72 701.26,-63.3"/>
+<polygon fill="black" stroke="black" points="700.17,-66.64 710.7,-65.43 701.71,-59.81 700.17,-66.64"/>
 </g>
-<!-- op_4391284048&#45;&gt;tensor_4391284048 -->
+<!-- op_4385828176&#45;&gt;tensor_4385828176 -->
 <g id="edge1" class="edge">
-<title>op_4391284048-&gt;tensor_4391284048</title>
-<path fill="none" stroke="black" d="M144.69,-713.13C144.69,-720.2 144.69,-728.54 144.69,-736.81"/>
-<polygon fill="black" stroke="black" points="141.19,-736.81 144.69,-746.81 148.19,-736.81 141.19,-736.81"/>
+<title>op_4385828176-&gt;tensor_4385828176</title>
+<path fill="none" stroke="black" d="M750.6,-69.8C757.77,-69.8 766.26,-69.8 774.66,-69.8"/>
+<polygon fill="black" stroke="black" points="774.4,-73.3 784.4,-69.8 774.4,-66.3 774.4,-73.3"/>
 </g>
-<!-- op_4379945408&#45;&gt;tensor_4379945408 -->
+<!-- op_4339329472&#45;&gt;tensor_4339329472 -->
 <g id="edge3" class="edge">
-<title>op_4379945408-&gt;tensor_4379945408</title>
-<path fill="none" stroke="black" d="M104.59,-544.91C105.58,-552.65 106.65,-561.08 107.68,-569.19"/>
-<polygon fill="black" stroke="black" points="104.17,-569.36 108.91,-578.84 111.12,-568.48 104.17,-569.36"/>
+<title>op_4339329472-&gt;tensor_4339329472</title>
+<path fill="none" stroke="black" d="M578.91,-104.89C586.51,-104.41 594.78,-103.89 602.8,-103.39"/>
+<polygon fill="black" stroke="black" points="603,-106.89 612.76,-102.77 602.56,-99.9 603,-106.89"/>
 </g>
-<!-- op_4391546096&#45;&gt;tensor_4391546096 -->
+<!-- op_4385974192&#45;&gt;tensor_4385974192 -->
 <g id="edge5" class="edge">
-<title>op_4391546096-&gt;tensor_4391546096</title>
-<path fill="none" stroke="black" d="M39.1,-343.01C39.31,-352.65 39.57,-364.84 39.83,-376.47"/>
-<polygon fill="black" stroke="black" points="36.33,-376.38 40.04,-386.3 43.32,-376.23 36.33,-376.38"/>
+<title>op_4385974192-&gt;tensor_4385974192</title>
+<path fill="none" stroke="black" d="M366.38,-104.99C376.46,-105.09 389.41,-105.22 401.91,-105.35"/>
+<polygon fill="black" stroke="black" points="401.63,-108.85 411.66,-105.45 401.7,-101.85 401.63,-108.85"/>
 </g>
-<!-- op_4392141600&#45;&gt;tensor_4392141600 -->
+<!-- op_4340656288&#45;&gt;tensor_4340656288 -->
 <g id="edge7" class="edge">
-<title>op_4392141600-&gt;tensor_4392141600</title>
-<path fill="none" stroke="black" d="M40.34,-165.35C40.26,-173.16 40.17,-181.49 40.09,-189.45"/>
-<polygon fill="black" stroke="black" points="36.6,-189.22 39.99,-199.26 43.6,-189.29 36.6,-189.22"/>
+<title>op_4340656288-&gt;tensor_4340656288</title>
+<path fill="none" stroke="black" d="M178.55,-104.14C186.22,-104.22 194.42,-104.3 202.37,-104.37"/>
+<polygon fill="black" stroke="black" points="202.22,-107.87 212.25,-104.47 202.29,-100.87 202.22,-107.87"/>
 </g>
-<!-- op_4391545872&#45;&gt;tensor_4391545872 -->
+<!-- op_4385974864&#45;&gt;tensor_4385974864 -->
 <g id="edge11" class="edge">
-<title>op_4391545872-&gt;tensor_4391545872</title>
-<path fill="none" stroke="black" d="M113.79,-148.76C113.95,-179.45 114.27,-241.72 114.49,-282.76"/>
-<polygon fill="black" stroke="black" points="110.99,-282.74 114.54,-292.73 117.99,-282.71 110.99,-282.74"/>
+<title>op_4385974864-&gt;tensor_4385974864</title>
+<path fill="none" stroke="black" d="M161.78,-176.53C193.89,-176.05 261.06,-175.06 304.81,-174.41"/>
+<polygon fill="black" stroke="black" points="304.74,-177.91 314.69,-174.26 304.64,-170.91 304.74,-177.91"/>
 </g>
-<!-- op_4391283088&#45;&gt;tensor_4391283088 -->
+<!-- op_4385828368&#45;&gt;tensor_4385828368 -->
 <g id="edge14" class="edge">
-<title>op_4391283088-&gt;tensor_4391283088</title>
-<path fill="none" stroke="black" d="M189.69,-341.81C189.69,-371.4 189.69,-432.38 189.69,-472.82"/>
-<polygon fill="black" stroke="black" points="186.19,-472.62 189.69,-482.62 193.19,-472.62 186.19,-472.62"/>
+<title>op_4385828368-&gt;tensor_4385828368</title>
+<path fill="none" stroke="black" d="M365.6,-28.8C396.61,-28.8 461.78,-28.8 504.77,-28.8"/>
+<polygon fill="black" stroke="black" points="504.75,-32.3 514.75,-28.8 504.75,-25.3 504.75,-32.3"/>
 </g>
 </g>
 </svg>
