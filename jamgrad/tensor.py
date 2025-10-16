@@ -178,6 +178,10 @@ class Tensor:
 
         return self._binary_op(other, np.add, grad_fn_factory)
 
+    def __radd__(self, other):
+        """Reverse addition: other + self."""
+        return self.__add__(other)
+
     def __sub__(self, other):
         """
         Element-wise subtraction.
@@ -199,6 +203,10 @@ class Tensor:
             return grad_fn
 
         return self._binary_op(other, np.subtract, grad_fn_factory)
+
+    def __rsub__(self, other):
+        """Reverse subtraction: other - self."""
+        return (-self).__add__(other)
 
     def __mul__(self, other):
         """
@@ -226,6 +234,10 @@ class Tensor:
             return grad_fn
 
         return self._binary_op(other, np.multiply, grad_fn_factory)
+
+    def __rmul__(self, other):
+        """Reverse multiplication: other * self."""
+        return self.__mul__(other)
 
     def __truediv__(self, other):
         """
@@ -256,6 +268,12 @@ class Tensor:
             return grad_fn
 
         return self._binary_op(other, np.divide, grad_fn_factory)
+
+    def __rtruediv__(self, other):
+        """Reverse division: other / self."""
+        if not isinstance(other, Tensor):
+            other = Tensor([other] if np.isscalar(other) else other)
+        return other.__truediv__(self)
 
     def __pow__(self, exponent):
         """
