@@ -1,5 +1,8 @@
 # jamgrad
 
+[![Python package](https://github.com/nenuadrian/jamgrad/actions/workflows/python-package.yml/badge.svg)](https://github.com/nenuadrian/jamgrad/actions/workflows/python-package.yml)
+[![Build and Deploy Docs](https://github.com/nenuadrian/jamgrad/actions/workflows/docs.yml/badge.svg)](https://github.com/nenuadrian/jamgrad/actions/workflows/docs.yml)
+
 ![logo](./assets/jamgrad.png)
 
 Inspired by [Micrograd](https://github.com/karpathy/micrograd/tree/master) and many other light autograd implementations.
