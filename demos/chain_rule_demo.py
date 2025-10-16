@@ -1,10 +1,6 @@
 from jamgrad import Tensor
 
 
-print("=" * 60)
-print("CHAIN RULE DEMONSTRATIONS WITH JAMGRAD")
-print("=" * 60)
-
 # Example 1: Simple composition f(g(x))
 print("\n=== Example 1: Simple Composition ===")
 print("Function: f(u) = u^2 where u = g(x) = 3x")
@@ -162,4 +158,3 @@ print("To render: dot -Tpng chain_rule_graph.dot -o chain_rule_graph.png")
 
 print("\n" + "=" * 60)
 print("CHAIN RULE DEMONSTRATIONS COMPLETE")
-print("=" * 60)
