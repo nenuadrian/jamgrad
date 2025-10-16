@@ -1,5 +1,4 @@
 import numpy as np
-from typing import Optional, List, Callable
 
 
 class Tensor:
@@ -478,81 +477,6 @@ class Tensor:
             str: DOT format string representing the computation graph
         """
 
-        def get_tensor_id(tensor):
-            return f"tensor_{id(tensor)}"
-
-        def get_op_id(tensor):
-            return f"op_{id(tensor)}"
-
-        def get_tensor_label(tensor):
-            """Build readable label for a tensor node."""
-            label_parts = []
-            if tensor._label:
-                label_parts.append(f"{tensor._label}")
-            else:
-                label_parts.append("unnamed")
-
-            shape_str = "x".join(map(str, tensor.shape))
-            label_parts.append(f"shape=({shape_str})")
-
-            val = np.array2string(tensor.data.flatten()[:3], precision=4, separator=",")
-            if tensor.data.size > 3:
-                val = val[:-1] + ", ...]"
-            label_parts.append(f"val={val}")
-
-            if tensor.requires_grad:
-                if tensor.grad is not None:
-                    grad_str = np.array2string(
-                        tensor.grad.flatten()[:3], precision=4, separator=","
-                    )
-                    if tensor.grad.size > 3:
-                        grad_str = grad_str[:-1] + ", ...]"
-                    label_parts.append(f"grad={grad_str}")
-                else:
-                    label_parts.append("grad=None")
-
-            return "\\n".join(label_parts)
-
-        def traverse(
-            tensor, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes
-        ):
-            tid = get_tensor_id(tensor)
-            if tid in visited_tensors:
-                return
-            visited_tensors.add(tid)
-
-            # Tensor node styling
-            color = "lightblue" if tensor.requires_grad else "lightgray"
-            label = get_tensor_label(tensor)
-            tensor_nodes.append(
-                f'  {tid} [label="{label}", shape="box", style="filled,rounded", fillcolor="{color}"];'
-            )
-
-            # If this tensor came from an operation
-            if tensor._op_name and tensor._children:
-                opid = get_op_id(tensor)
-                if opid not in visited_ops:
-                    visited_ops.add(opid)
-                    op_nodes.append(
-                        f'  {opid} [label="{tensor._op_name}", shape="circle", style="filled", fillcolor="orange"];'
-                    )
-
-                    # Operation → output edge
-                    edges.append(f"  {opid} -> {tid};")
-
-                    # Input → operation edges
-                    for child in tensor._children:
-                        cid = get_tensor_id(child)
-                        edges.append(f"  {cid} -> {opid};")
-                        traverse(
-                            child,
-                            visited_tensors,
-                            visited_ops,
-                            edges,
-                            tensor_nodes,
-                            op_nodes,
-                        )
-
         visited_tensors, visited_ops = set(), set()
         edges, tensor_nodes, op_nodes = [], [], []
         traverse(self, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes)
@@ -570,3 +494,80 @@ class Tensor:
             "}",
         ]
         return "\n".join(dot)
+
+
+def get_tensor_id(tensor):
+    return f"tensor_{id(tensor)}"
+
+
+def get_op_id(tensor):
+    return f"op_{id(tensor)}"
+
+
+def get_tensor_label(tensor):
+    """Build readable label for a tensor node."""
+    label_parts = []
+    if tensor._label:
+        label_parts.append(f"{tensor._label}")
+    else:
+        label_parts.append("unnamed")
+
+    shape_str = "x".join(map(str, tensor.shape))
+    label_parts.append(f"shape=({shape_str})")
+
+    val = np.array2string(tensor.data.flatten()[:3], precision=4, separator=",")
+    if tensor.data.size > 3:
+        val = val[:-1] + ", ...]"
+    label_parts.append(f"val={val}")
+
+    if tensor.requires_grad:
+        if tensor.grad is not None:
+            grad_str = np.array2string(
+                tensor.grad.flatten()[:3], precision=4, separator=","
+            )
+            if tensor.grad.size > 3:
+                grad_str = grad_str[:-1] + ", ...]"
+            label_parts.append(f"grad={grad_str}")
+        else:
+            label_parts.append("grad=None")
+
+    return "\\n".join(label_parts)
+
+
+def traverse(tensor, visited_tensors, visited_ops, edges, tensor_nodes, op_nodes):
+    tid = get_tensor_id(tensor)
+    if tid in visited_tensors:
+        return
+    visited_tensors.add(tid)
+
+    # Tensor node styling
+    color = "lightblue" if tensor.requires_grad else "lightgray"
+    label = get_tensor_label(tensor)
+    tensor_nodes.append(
+        f'  {tid} [label="{label}", shape="box", style="filled,rounded", fillcolor="{color}"];'
+    )
+
+    # If this tensor came from an operation
+    if tensor._op_name and tensor._children:
+        opid = get_op_id(tensor)
+        if opid not in visited_ops:
+            visited_ops.add(opid)
+            op_nodes.append(
+                f'  {opid} [label="{tensor._op_name}", shape="circle", style="filled", fillcolor="orange"];'
+            )
+
+            # Operation → output edge
+            edges.append(f"  {opid} -> {tid};")
+
+            # Input → operation edges
+            for child in tensor._children:
+                cid = get_tensor_id(child)
+                edges.append(f"  {cid} -> {opid};")
+                traverse(
+                    child,
+                    visited_tensors,
+                    visited_ops,
+                    edges,
+                    tensor_nodes,
+                    op_nodes,
+                )
