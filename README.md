@@ -90,5 +90,6 @@ z = (1^2 + 2)e^1 + \ln(2)
 \approx 8.847993
 $$
 
-### viz
-![graphviz](./assets/graphviz.svg)
+### computation graph visualization
+
+![graphviz](./assets/computation_graph.png)

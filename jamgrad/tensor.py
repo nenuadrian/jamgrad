@@ -154,11 +154,15 @@ class Tensor:
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
-                    grad_self = Tensor._reduce_broadcast(gradient, self_tensor.data.shape)
+                    grad_self = Tensor._reduce_broadcast(
+                        gradient, self_tensor.data.shape
+                    )
                     self_tensor.backward(grad_self)
 
                 if is_tensor_other and other_tensor.requires_grad:
-                    grad_other = Tensor._reduce_broadcast(gradient, other_tensor.data.shape)
+                    grad_other = Tensor._reduce_broadcast(
+                        gradient, other_tensor.data.shape
+                    )
                     other_tensor.backward(grad_other)
 
             return grad_fn
@@ -276,7 +280,10 @@ class Tensor:
 
             return grad_fn
 
-        return self._unary_op(lambda x: np.power(x, exponent), grad_fn_factory)
+        def pow(x):
+            return np.power(x, exponent)
+
+        return self._unary_op(pow, grad_fn_factory)
 
     def exp(self):
         """
