@@ -24,6 +24,10 @@ f.backward()
 print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: 18 * {x.data[0]} = {18 * x.data[0]}")
 
+assert (
+    abs(x.grad.data[0] - 18 * x.data[0]) < 1e-6
+), "Gradient does not match expected value!"
+
 # Example 2: Nested functions f(g(h(x)))
 print("\n\n=== Example 2: Triple Composition ===")
 print("Function: f(v) = v^2 where v = g(u) = u + 1 where u = h(x) = 2x")
@@ -46,6 +50,10 @@ f.backward()
 print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: 4 * {v.data[0]} = {4 * v.data[0]}")
 
+assert (
+    abs(x.grad.data[0] - 4 * v.data[0]) < 1e-6
+), "Gradient does not match expected value!"
+
 # Example 3: Product rule combined with chain rule
 print("\n\n=== Example 3: Product Rule + Chain Rule ===")
 print("Function: f(x) = x^2 * (2x + 1)")
@@ -65,9 +73,11 @@ print(f"v = 2x + 1 = {v.data[0]}")
 print(f"f = u * v = {f.data[0]}")
 
 f.backward()
-expected = 6 * x.data[0]**2 + 2 * x.data[0]
+expected = 6 * x.data[0] ** 2 + 2 * x.data[0]
 print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: 6({x.data[0]})^2 + 2({x.data[0]}) = {expected}")
+
+assert abs(x.grad.data[0] - expected) < 1e-6, "Gradient does not match expected value!"
 
 # Example 4: Exponential and logarithm chain rule
 print("\n\n=== Example 4: Exponential Chain Rule ===")
@@ -86,9 +96,12 @@ print(f"f = exp(u) = {f.data[0]}")
 
 f.backward()
 import math
-expected = math.exp(x.data[0]**2) * 2 * x.data[0]
+
+expected = math.exp(x.data[0] ** 2) * 2 * x.data[0]
 print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: exp({x.data[0]}^2) * 2 * {x.data[0]} = {expected}")
+
+assert abs(x.grad.data[0] - expected) < 1e-6, "Gradient does not match expected value!"
 
 # Example 5: Power rule with chain rule
 print("\n\n=== Example 5: Power of Composition ===")
@@ -106,9 +119,11 @@ print(f"u = 2x + 3 = {u.data[0]}")
 print(f"f = u^3 = {f.data[0]}")
 
 f.backward()
-expected = 3 * (2 * x.data[0] + 3)**2 * 2
+expected = 3 * (2 * x.data[0] + 3) ** 2 * 2
 print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: 3 * ({u.data[0]})^2 * 2 = {expected}")
+
+assert abs(x.grad.data[0] - expected) < 1e-6, "Gradient does not match expected value!"
 
 # Example 6: Multiple variables with chain rule
 print("\n\n=== Example 6: Multivariable Chain Rule ===")
@@ -133,6 +148,10 @@ print(f"\ndf/dx = {x.grad.data[0]}")
 print(f"Expected: 2 * {u.data[0]} * {y.data[0]} = {expected_dx}")
 print(f"df/dy = {y.grad.data[0]}")
 print(f"Expected: 2 * {u.data[0]} * {x.data[0]} = {expected_dy}")
+
+assert (
+    abs(x.grad.data[0] - expected_dx) < 1e-6
+), "Gradient w.r.t x does not match expected value!"
 
 # Save computation graph for the last example
 print("\n\n=== Computation Graph ===")
