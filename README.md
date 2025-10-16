@@ -31,7 +31,7 @@ pytest tests --cov=jamgrad
 Generate documentation using Sphinx:
 
 ```bash
-pip install sphinx sphinx-rtd-theme
+pip install sphinx sphinx-rtd-theme sphinx-autoapi
 
 make html
 ```

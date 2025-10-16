@@ -220,7 +220,10 @@ class Tensor:
 
             return grad_fn
 
-        return self._binary_op(other, np.multiply, grad_fn_factory)
+        def mul(x, y):
+            return np.multiply(x, y)
+
+        return self._binary_op(other, mul, grad_fn_factory)
 
     def __rmul__(self, other):
         """Reverse multiplication: other * self."""
@@ -364,7 +367,6 @@ class Tensor:
 
     @property
     def shape(self):
-        """Shape of the tensor data."""
         return self.data.shape
 
     @property
