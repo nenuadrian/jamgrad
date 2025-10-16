@@ -44,10 +44,6 @@ class Tensor:
 
         Returns:
             Tensor: Self for method chaining
-
-        Examples:
-            >>> x = Tensor([2.0], requires_grad=True).set_label('x')
-            >>> y = (x ** 2).set_label('y')
         """
         self._label = label
         return self
@@ -129,6 +125,21 @@ class Tensor:
 
         return result
 
+    @staticmethod
+    def _reduce_broadcast(grad, target_shape):
+        """
+        Reduce gradient `grad` to match `target_shape` by summing over broadcasted axes.
+        This ensures backward() receives a gradient of the same shape as the original tensor.
+        """
+        # Remove extra leading dimensions that arose from broadcasting
+        while grad.ndim > len(target_shape):
+            grad = np.sum(grad, axis=0)
+        # Sum along axes where target shape had dimension 1
+        for i, (gdim, tdim) in enumerate(zip(grad.shape, target_shape)):
+            if tdim == 1 and gdim > 1:
+                grad = np.sum(grad, axis=i, keepdims=True)
+        return grad
+
     def __add__(self, other):
         """
         Element-wise addition.
@@ -138,39 +149,16 @@ class Tensor:
 
         Returns:
             Tensor: Result of addition with gradient support
-
-        Examples:
-            >>> a = Tensor([1, 2])
-            >>> b = Tensor([3, 4])
-            >>> c = a + b  # [4, 6]
         """
 
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
             def grad_fn(gradient):
                 if self_tensor.requires_grad:
-                    # Handle broadcasting by summing over broadcasted dimensions
-                    grad_self = gradient
-                    # Sum over dimensions that were broadcasted for self
-                    for i in range(gradient.ndim - self_tensor.data.ndim):
-                        grad_self = np.sum(grad_self, axis=0)
-                    for i, (grad_dim, self_dim) in enumerate(
-                        zip(grad_self.shape, self_tensor.data.shape)
-                    ):
-                        if self_dim == 1 and grad_dim > 1:
-                            grad_self = np.sum(grad_self, axis=i, keepdims=True)
+                    grad_self = Tensor._reduce_broadcast(gradient, self_tensor.data.shape)
                     self_tensor.backward(grad_self)
 
                 if is_tensor_other and other_tensor.requires_grad:
-                    # Handle broadcasting by summing over broadcasted dimensions
-                    grad_other = gradient
-                    # Sum over dimensions that were broadcasted for other
-                    for i in range(gradient.ndim - other_tensor.data.ndim):
-                        grad_other = np.sum(grad_other, axis=0)
-                    for i, (grad_dim, other_dim) in enumerate(
-                        zip(grad_other.shape, other_tensor.data.shape)
-                    ):
-                        if other_dim == 1 and grad_dim > 1:
-                            grad_other = np.sum(grad_other, axis=i, keepdims=True)
+                    grad_other = Tensor._reduce_broadcast(gradient, other_tensor.data.shape)
                     other_tensor.backward(grad_other)
 
             return grad_fn
@@ -216,10 +204,6 @@ class Tensor:
 
         Returns:
             Tensor: Result of multiplication with gradient support
-
-        Examples:
-            >>> a = Tensor([2, 3])
-            >>> b = a * 2  # [4, 6]
         """
 
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
@@ -247,10 +231,6 @@ class Tensor:
 
         Returns:
             Tensor: Result of division with gradient support
-
-        Examples:
-            >>> a = Tensor([4, 6])
-            >>> b = a / 2  # [2, 3]
         """
 
         def grad_fn_factory(self_tensor, other_tensor, is_tensor_other):
@@ -283,10 +263,6 @@ class Tensor:
 
         Returns:
             Tensor: Result of power operation with gradient support
-
-        Examples:
-            >>> x = Tensor([2, 3])
-            >>> y = x ** 2  # [4, 9]
         """
 
         def grad_fn_factory(self_tensor, result_data):
@@ -308,10 +284,6 @@ class Tensor:
 
         Returns:
             Tensor: e^x for each element x in the tensor
-
-        Examples:
-            >>> x = Tensor([0, 1])
-            >>> y = x.exp()  # [1.0, 2.718...]
         """
 
         def grad_fn_factory(self_tensor, result_data):
@@ -328,10 +300,6 @@ class Tensor:
 
         Returns:
             Tensor: ln(x) for each element x in the tensor
-
-        Examples:
-            >>> x = Tensor([1, 2.718])
-            >>> y = x.log()  # [0.0, 1.0]
         """
 
         def grad_fn_factory(self_tensor, result_data):
@@ -352,11 +320,6 @@ class Tensor:
 
         Returns:
             Tensor: Sum of tensor elements with gradient support
-
-        Examples:
-            >>> x = Tensor([[1, 2], [3, 4]])
-            >>> y = x.sum()  # 10
-            >>> z = x.sum(axis=0)  # [4, 6]
         """
         result_data = np.sum(self.data, axis=axis)
         result = Tensor(result_data, requires_grad=self.requires_grad)
@@ -414,11 +377,6 @@ class Tensor:
 
         Raises:
             TypeError: If other is not a Tensor
-
-        Examples:
-            >>> a = Tensor([[1, 2], [3, 4]])
-            >>> b = Tensor([[5, 6], [7, 8]])
-            >>> c = a @ b  # Matrix multiplication
         """
         if not isinstance(other, Tensor):
             raise TypeError(
@@ -455,10 +413,6 @@ class Tensor:
 
         Returns:
             Tensor: Negated tensor with gradient support
-
-        Examples:
-            >>> a = Tensor([1, -2])
-            >>> b = -a  # [-1, 2]
         """
 
         def grad_fn_factory(self_tensor, _):
