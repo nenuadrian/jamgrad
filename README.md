@@ -59,7 +59,7 @@ output = layer(Tensor([[1.0, 2.0]]))
 ## demo
 
 $$
-z = (x^2 + y) \, e^x + \ln(y)
+z = (x^2 + y) e^x + \ln(y)
 $$
 
 $$
