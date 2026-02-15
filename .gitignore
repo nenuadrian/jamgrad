@@ -208,6 +208,10 @@ __marimo__/
 
 _**
 
+# Keep generated Sphinx/Pages artifacts under docs/
+!docs/_*/
+!docs/_*/**
+
 *.dot
 
 .DS_Store
