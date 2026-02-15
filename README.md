@@ -9,17 +9,29 @@ Inspired by [Micrograd](https://github.com/karpathy/micrograd/tree/master) and m
 
 But why jamgrad? Because it's jam-packed with features! Actually, no, I am from Romania, we love making jam.
 
+- [jamgrad](#jamgrad)
+  - [setup](#setup)
+  - [test](#test)
+  - [documentation](#documentation)
+  - [quick start](#quick-start)
+  - [demo](#demo)
+    - [eigenvalue demo](#eigenvalue-demo)
+    - [computation graph visualization](#computation-graph-visualization)
+
 ## setup
+
 ```bash
 python -m venv jamenv
 source jamenv/bin/activate
 
 pip install pytest pytest-cov numpy torch scikit-learn pandas
+pip install .
 ```
 
 ## test
 
 To run tests with verbose output:
+
 ```bash
 pytest tests -v
 ```
@@ -92,6 +104,14 @@ z = (1^2 + 2)e^1 + \ln(2)
 = 3e + \ln(2)
 \approx 8.847993
 $$
+
+### eigenvalue demo
+
+Run dominant-eigenvalue estimation with power iteration (using `Tensor` matmul/ops):
+
+```bash
+python demos/demo_eigenvalues.py --matrix symmetric3 --iters 200
+```
 
 ### computation graph visualization
 
