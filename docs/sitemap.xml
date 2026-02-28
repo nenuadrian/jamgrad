@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/api/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/demo/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/demo_chain_rule/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/demo_eigenvalues/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/demo_mnist/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+    <url>
+         <loc>https://nenuadrian.github.io/jamgrad/demos/demo_nn/</loc>
+         <lastmod>2026-02-28</lastmod>
+    </url>
+</urlset>

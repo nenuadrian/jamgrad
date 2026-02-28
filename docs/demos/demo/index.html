@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://nenuadrian.github.io/jamgrad/">
+        <link rel="canonical" href="https://nenuadrian.github.io/jamgrad/demos/demo/">
       
       
+        <link rel="prev" href="../">
       
-        <link rel="next" href="demos/">
+      
+        <link rel="next" href="../demo_chain_rule/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
     
       
-        <title>jamgrad</title>
+        <title>demo.py - jamgrad</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jamgrad" class="md-skip">
+        <a href="#demopy" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="jamgrad" class="md-header__button md-logo" aria-label="jamgrad" data-md-component="logo">
+    <a href="../.." title="jamgrad" class="md-header__button md-logo" aria-label="jamgrad" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              demo.py
             
           </span>
         </div>
@@ -214,7 +216,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="jamgrad" class="md-nav__button md-logo" aria-label="jamgrad" data-md-component="logo">
+    <a href="../.." title="jamgrad" class="md-nav__button md-logo" aria-label="jamgrad" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -241,6 +243,115 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Demos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -260,7 +371,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    demo.py
   
 
     
@@ -271,14 +382,14 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Home
+    demo.py
   
 
     
@@ -304,10 +415,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        setup
+        Run
       
     </span>
   </a>
@@ -315,10 +426,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test" class="md-nav__link">
+  <a href="#what-it-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        test
+        What it covers
       
     </span>
   </a>
@@ -326,107 +437,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#output-artifacts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        documentation
+        Output artifacts
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        quick start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        demo
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-tensor-autograd-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        basic tensor + autograd demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chain-rule-walkthrough" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        chain rule walkthrough
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#eigenvalue-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        eigenvalue demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xor-neural-network-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        xor neural network demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mnist-neural-network-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mnist neural network demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#computation-graph-visualization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        computation graph visualization
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -437,85 +454,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Demos
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Demos
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="demos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -525,35 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="demos/demo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    demo.py
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="demos/demo_chain_rule/" class="md-nav__link">
+      <a href="../demo_chain_rule/" class="md-nav__link">
         
   
   
@@ -581,7 +491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="demos/demo_eigenvalues/" class="md-nav__link">
+      <a href="../demo_eigenvalues/" class="md-nav__link">
         
   
   
@@ -609,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="demos/demo_nn/" class="md-nav__link">
+      <a href="../demo_nn/" class="md-nav__link">
         
   
   
@@ -637,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="demos/demo_mnist/" class="md-nav__link">
+      <a href="../demo_mnist/" class="md-nav__link">
         
   
   
@@ -672,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   
@@ -719,10 +629,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        setup
+        Run
       
     </span>
   </a>
@@ -730,10 +640,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#test" class="md-nav__link">
+  <a href="#what-it-covers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        test
+        What it covers
       
     </span>
   </a>
@@ -741,107 +651,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#output-artifacts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        documentation
+        Output artifacts
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        quick start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        demo
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-tensor-autograd-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        basic tensor + autograd demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chain-rule-walkthrough" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        chain rule walkthrough
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#eigenvalue-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        eigenvalue demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xor-neural-network-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        xor neural network demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mnist-neural-network-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        mnist neural network demo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#computation-graph-visualization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        computation graph visualization
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -865,113 +681,31 @@
   
 
 
-<h1 id="jamgrad">jamgrad<a class="headerlink" href="#jamgrad" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/nenuadrian/jamgrad/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/nenuadrian/jamgrad/actions/workflows/python-package.yml/badge.svg" /></a>
-<a href="https://github.com/nenuadrian/jamgrad/actions/workflows/docs.yml"><img alt="Build and Deploy Docs" src="https://github.com/nenuadrian/jamgrad/actions/workflows/docs.yml/badge.svg" /></a></p>
-<p><img alt="logo" src="assets/jamgrad.png" /></p>
-<p>Inspired by <a href="https://github.com/karpathy/micrograd/tree/master">Micrograd</a> and many other light autograd implementations.</p>
-<p>But why jamgrad? Because it's jam-packed with features! Actually, no, I am from Romania, we love making jam.</p>
-<ul>
-<li><a href="#jamgrad">jamgrad</a></li>
-<li><a href="#setup">setup</a></li>
-<li><a href="#test">test</a></li>
-<li><a href="#documentation">documentation</a></li>
-<li><a href="#quick-start">quick start</a></li>
-<li><a href="#demo">demo</a><ul>
-<li><a href="#basic-tensor--autograd-demo">basic tensor + autograd demo</a></li>
-<li><a href="#chain-rule-walkthrough">chain rule walkthrough</a></li>
-<li><a href="#eigenvalue-demo">eigenvalue demo</a></li>
-<li><a href="#xor-neural-network-demo">xor neural network demo</a></li>
-<li><a href="#mnist-neural-network-demo">mnist neural network demo</a></li>
-<li><a href="#computation-graph-visualization">computation graph visualization</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="setup">setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>jamenv
-<span class="nb">source</span><span class="w"> </span>jamenv/bin/activate
-
-pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>pytest-cov<span class="w"> </span>numpy<span class="w"> </span>torch<span class="w"> </span>scikit-learn<span class="w"> </span>pandas
-pip<span class="w"> </span>install<span class="w"> </span>.
-</code></pre></div>
-<h2 id="test">test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
-<p>To run tests with verbose output:</p>
-<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests<span class="w"> </span>-v
-</code></pre></div>
-<p>With coverage:
-<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests<span class="w"> </span>--cov<span class="o">=</span>jamgrad
-</code></pre></div></p>
-<h2 id="documentation">documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>Generate documentation using MkDocs Material:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material<span class="w"> </span>pymdown-extensions
-
-make<span class="w"> </span>docs-serve
-</code></pre></div>
-<p>Build static docs into <code>docs/</code>:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>docs-build
-</code></pre></div>
-<h2 id="quick-start">quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">jamgrad</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tensor</span>
-
-<span class="c1"># Basic operations</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>  <span class="c1"># [4.0]</span>
-
-<span class="c1"># Neural networks</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jamgrad.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">Linear</span>
-<span class="n">layer</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">Tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]]))</span>
-</code></pre></div>
-<h2 id="demo">demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h2>
-<h3 id="basic-tensor-autograd-demo">basic tensor + autograd demo<a class="headerlink" href="#basic-tensor-autograd-demo" title="Permanent link">&para;</a></h3>
+<h1 id="demopy"><code>demo.py</code><a class="headerlink" href="#demopy" title="Permanent link">&para;</a></h1>
+<p>This is the basic end-to-end tensor and autograd demo.</p>
+<h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>demos/demo.py
 </code></pre></div>
-<h3 id="chain-rule-walkthrough">chain rule walkthrough<a class="headerlink" href="#chain-rule-walkthrough" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>demos/demo_chain_rule.py
+<h2 id="what-it-covers">What it covers<a class="headerlink" href="#what-it-covers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tensor creation and arithmetic (<code>+</code>, <code>*</code>, <code>**</code>)</li>
+<li>Scalar backpropagation with <code>backward()</code></li>
+<li>A composed expression:</li>
+</ul>
+<div class="arithmatex">\[
+z = (x^2 + y)e^x + \ln(y)
+\]</div>
+<ul>
+<li>Gradient inspection for both <code>x</code> and <code>y</code></li>
+<li>Computation graph export in DOT format</li>
+</ul>
+<h2 id="output-artifacts">Output artifacts<a class="headerlink" href="#output-artifacts" title="Permanent link">&para;</a></h2>
+<p>The script writes:</p>
+<div class="highlight"><pre><span></span><code>computation_graph.dot
 </code></pre></div>
-<div class="arithmatex">\[
-z = (x^2 + y) e^x + \ln(y)
-\]</div>
-<div class="arithmatex">\[
-\frac{\partial z}{\partial x}
-= \frac{\partial}{\partial x} \big[ (x^2 + y)e^x + \ln(y) \big]
-= (2x)e^x + (x^2 + y)e^x
-= e^x (2x + x^2 + y)
-\]</div>
-<div class="arithmatex">\[
-\text{At } x = 1, \, y = 2:
-\quad
-\frac{\partial z}{\partial x} = e^1 (2 + 1 + 2) = 5e \approx 13.591409
-\]</div>
-<div class="arithmatex">\[
-\frac{\partial z}{\partial y}
-= \frac{\partial}{\partial y} \big[ (x^2 + y)e^x + \ln(y) \big]
-= e^x + \frac{1}{y}
-\]</div>
-<div class="arithmatex">\[
-\text{At } x = 1, \, y = 2:
-\quad
-\frac{\partial z}{\partial y} = e^1 + \frac{1}{2} = e + 0.5 \approx 3.2182818
-\]</div>
-<div class="arithmatex">\[
-z = (1^2 + 2)e^1 + \ln(2)
-= 3e + \ln(2)
-\approx 8.847993
-\]</div>
-<h3 id="eigenvalue-demo">eigenvalue demo<a class="headerlink" href="#eigenvalue-demo" title="Permanent link">&para;</a></h3>
-<p>Run dominant-eigenvalue estimation with power iteration (using <code>Tensor</code> matmul/ops):</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>demos/demo_eigenvalues.py<span class="w"> </span>--matrix<span class="w"> </span>symmetric3<span class="w"> </span>--iters<span class="w"> </span><span class="m">200</span>
+<p>To render it:</p>
+<div class="highlight"><pre><span></span><code>dot<span class="w"> </span>-Tpng<span class="w"> </span>computation_graph.dot<span class="w"> </span>-o<span class="w"> </span>assets/computation_graph.png
 </code></pre></div>
-<h3 id="xor-neural-network-demo">xor neural network demo<a class="headerlink" href="#xor-neural-network-demo" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>demos/demo_nn.py<span class="w"> </span>--epochs<span class="w"> </span><span class="m">1000</span><span class="w"> </span>--lr<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>--hidden-size<span class="w"> </span><span class="m">4</span>
-</code></pre></div>
-<h3 id="mnist-neural-network-demo">mnist neural network demo<a class="headerlink" href="#mnist-neural-network-demo" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>demos/demo_mnist.py<span class="w"> </span>--dataset-size<span class="w"> </span><span class="m">5000</span><span class="w"> </span>--epochs<span class="w"> </span><span class="m">20</span><span class="w"> </span>--batch-size<span class="w"> </span><span class="m">64</span><span class="w"> </span>--lr<span class="w"> </span><span class="m">0</span>.01
-</code></pre></div>
-<h3 id="computation-graph-visualization">computation graph visualization<a class="headerlink" href="#computation-graph-visualization" title="Permanent link">&para;</a></h3>
-<p><img alt="graphviz" src="assets/computation_graph.png" /></p>
 
 
 
@@ -1027,12 +761,12 @@ z = (1^2 + 2)e^1 + \ln(2)
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.highlight"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
