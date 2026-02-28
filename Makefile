@@ -1,20 +1,16 @@
-# Minimal makefile for Sphinx documentation
-#
+DOCS_SRC := docs_src
+SITE_DIR := docs
 
-# You can set these variables from the command line, and also
-# from the environment for the first two.
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = .
-BUILDDIR      = _build
+.PHONY: docs-sync-home docs-build docs-serve docs-clean
 
-# Put it first so that "make" without argument is like "make help".
-help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+docs-sync-home:
+	cp README.md $(DOCS_SRC)/index.md
 
-.PHONY: help Makefile
+docs-build: docs-sync-home
+	mkdocs build --clean
 
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+docs-serve: docs-sync-home
+	mkdocs serve
+
+docs-clean:
+	rm -rf $(SITE_DIR)

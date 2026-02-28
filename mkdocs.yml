@@ -1,0 +1,52 @@
+site_name: jamgrad
+site_description: Lightweight autograd from first principles.
+site_url: https://nenuadrian.github.io/jamgrad/
+repo_url: https://github.com/nenuadrian/jamgrad
+repo_name: nenuadrian/jamgrad
+
+docs_dir: docs_src
+site_dir: docs
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: green
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.inlinehilite
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Demos:
+      - Overview: demos/index.md
+      - demo.py: demos/demo.md
+      - demo_chain_rule.py: demos/demo_chain_rule.md
+      - demo_eigenvalues.py: demos/demo_eigenvalues.md
+      - demo_nn.py: demos/demo_nn.md
+      - demo_mnist.py: demos/demo_mnist.md
+  - API Overview: api.md
